@@ -1,0 +1,89 @@
+<html><head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta content="Thomas Ptacek, Sean Devlin, and Alex Balducci" name="author">
+    <title>Challenge 24 Set 3 - The Cryptopals Crypto Challenges</title>
+    <link href="3.24_files/bootstrap.css" media="all" rel="stylesheet" type="text/css">
+    <link href="3.24_files/app.css" media="all" rel="stylesheet" type="text/css">
+    <link href="3.24_files/fonts.html" rel="stylesheet" type="text/css">
+    <link href="3.24_files/prism.css" rel="stylesheet" type="text/css">
+    <script src="3.24_files/prism.js"></script>
+    <style>
+      body { 
+        padding: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h3>
+            <a href="https://cryptopals.com/">the cryptopals crypto challenges</a>
+          </h3>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <ul class="breadcrumb">
+            <li>
+              <a href="https://cryptopals.com/">Challenges</a>
+            </li>
+            <li>
+              <a href="https://cryptopals.com/sets/3">Set 3</a>
+            </li>
+            <li class="active">
+              <a href="https://cryptopals.com/sets/3/challenges/24">Challenge 24</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        
+        <div class="col-md-2"></div>
+        <div class="col-md-10">
+          <h3>Create the MT19937 stream cipher and break it</h3>
+          <p>
+  You can create a trivial stream cipher out of any PRNG; use it to
+  generate a sequence of 8 bit outputs and call those outputs a
+  keystream. XOR each byte of plaintext with each successive byte of
+  keystream.
+</p>
+<p>
+  Write the function that does this for MT19937 using a 16-bit
+  seed. Verify that you can encrypt and decrypt properly. This code
+  should look similar to your CTR code.
+</p>
+<p>
+  Use your function to encrypt a known plaintext (say, 14 consecutive
+  'A' characters) prefixed by a random number of random characters.
+</p>
+<p>
+  From the ciphertext, recover the "key" (the 16 bit seed).
+</p>
+<p>
+  Use the same idea to generate a random "password reset token" using
+  MT19937 seeded from the current time.
+</p>
+<p>
+  Write a function to check if any given password token is actually
+  the product of an MT19937 PRNG seeded with the current time.
+</p>
+
+        </div>
+      </div>
+   </div>
+   <div style="text-align:center"><a href="https://cryptoservices.github.io/">Cryptography Services</a> | <a href="https://www.nccgroup.trust/us/">NCC Group</a></div>
+  
+  <script>
+    /*var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-68682-6']);
+    _gaq.push(['_trackPageview']);
+    
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();*/
+  </script>
+</body></html>

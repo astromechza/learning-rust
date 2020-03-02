@@ -1,0 +1,3235 @@
+<html lang="en-us"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><style>
+    .gate_box, .session_box {
+      margin-bottom: 1em;
+      background: #ffffea;
+      padding: 10px 20px;
+      border: 1px solid #d8b71c;
+      line-height: 1.8;
+      border-radius: 2px;
+    }
+
+    .gate_box.friend {
+      background: #e1ffda;
+      border-color: #92cc5b;
+    }
+
+    .gate_box.error {
+      background: #ffdadd;
+      border-color: #cc5b5b;
+    }
+
+    .gate_box .buttons {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      margin: 1em 0;
+    }
+
+    .gate_box .spacer {
+      flex-basis: 1em;
+    }
+
+    .session_box {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .session_box .avatar {
+      height: 2em;
+      margin-right: .5em;
+      border-radius: 50%;
+    }
+
+    .session_box .filler {
+      flex-grow: 1;
+    }
+
+    .session_box .tier {
+      font-size: 12px;
+      font-weight: bold;
+      background-color: #414141;
+      color: white;
+      margin-left: 1em;
+      padding: 3px 6px;
+      text-transform: uppercase;
+      vertical-align: middle;
+    }
+
+    .session_box .tier.Bronze {
+      background-color: #fb9f3f;
+    }
+
+    .session_box .tier.Silver {
+      background-color: #7c909c;
+    }
+
+    .session_box .tier.Gold {
+      background-color: #f5ec7d;
+      color: #3c3b3b;
+    }
+
+    .session_box .tier.Platinum {
+      background-color: #eae9db;
+      color: #3c3b3b;
+    }
+
+    .session_box .tier.Creator {
+      background-color: #ff9fe6;
+    }
+
+    .session_box a.button {
+      margin-right: 8px;
+    }
+
+    .session_box a.button:last-child {
+      margin-right: 0;
+    }
+
+    @media (max-width: 600px) {
+      .session_box .tier {
+        display: none;
+      }
+    }
+  </style> 
+
+
+
+<meta charset="utf-8">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Hey, I'm Amos.">
+
+
+    <meta property="twitter:site" content="@fasterthanlime">
+
+<meta property="og:site_name" content="amos">
+<meta property="og:locale" content="en-us">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://fasterthanli.me/blog/2020/a-half-hour-to-learn-rust/">
+<meta property="og:title" content="A half-hour to learn Rust">
+<meta property="twitter:title" content="A half-hour to learn Rust">
+
+    <meta property="og:image" content="https://fasterthanli.me/img/logo-square.png">
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:image" content="https://fasterthanli.me/img/logo-square.png">
+
+<meta property="og:description" content="In order to increase fluency in a programming language, one has to read a lot of it. But how can you read a lot of it if you don't know what it means?
+In this article, instead of focusing on one or two concepts, I'll try to go through as many Rust snippets as I can, and explain what the keywords and symbols they contain mean.
+Ready? Go!
+let introduces a variable binding:">
+<meta property="twitter:description" content="In order to increase fluency in a programming language, one has to read a lot of it. But how can you read a lot of it if you don't know what it means?
+In this article, instead of focusing on one or two concepts, I'll try to go through as many Rust snippets as I can, and explain what the keywords and symbols they contain mean.
+Ready? Go!
+let introduces a variable binding:">
+
+<title>
+
+
+     amos - A half-hour to learn Rust 
+
+</title>
+<link rel="canonical" href="https://fasterthanli.me/blog/2020/a-half-hour-to-learn-rust/">
+
+
+<style media="screen">
+  @font-face {
+  font-family: 'Nexa Bold';
+  src: url('/fonts/Nexa Bold.otf');
+}
+
+@font-face {
+  font-family: 'Cascadia Code';
+  src: url('/fonts/Cascadia.ttf');
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, div.column {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+html {
+  height: 100%;
+  font-size: 16px;
+}
+body {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: flex-start;
+  -moz-justify-content: flex-start;
+  -ms-justify-content: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  overflow-x: hidden;
+  min-height: 100%;
+  font-weight: 400;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  color: #111111;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility !important;
+}
+.icon {
+  text-rendering: geometricPrecision !important;
+}
+section {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  width: 100%;
+}
+div.column {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  width: 100%;
+}
+.container {
+  display: flex;
+  width: 100%;
+}
+div.header .container {
+  align-items: center;
+  justify-content: center;
+}
+div.header .container a {
+  text-decoration: none;
+}
+div.header .content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+div.header .container .logo {
+  border-radius: 50% 50%;
+  max-width: 80px;
+  margin-right: 2em;
+}
+div.header .name {
+  font-size: 18px;
+  font-family: 'Nexa Bold', 'Helvetica Neue', 'Arial', sans-serif;
+  
+      
+  text-transform: lowercase;
+      
+  
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  color: #333333;
+}
+div.header nav {
+  margin-bottom: 16px;
+}
+div.header nav ul {
+  list-style: none;
+  text-align: center;
+  display: -webkit-inline-flex;
+  display: -moz-inline-flex;
+  display: -ms-inline-flexbox;
+  display: -ms-inline-flex;
+  display: inline-flex;
+}
+div.header nav ul li {
+  margin-left: 6px;
+  margin-right: 6px;
+}
+div.header nav ul li:first-child {
+  margin-left: 0;
+}
+div.header nav ul li:last-child {
+  margin-right: 0;
+}
+div.header nav ul a {
+  color: #555555;
+  font-weight: 400;
+  font-size: 14px;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  text-decoration: none;
+  -webkit-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -moz-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -ms-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -o-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+}
+div.header nav ul a:hover {
+  color: #111111;
+}
+div.footer .container {
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  flex-direction: column-reverse;
+  width: 100%;
+  text-align: center;
+}
+div.footer .container a {
+  font-size: 14px;
+  margin-left: 6px;
+  margin-right: 6px;
+  opacity: 0.6;
+  text-decoration: none;
+  -webkit-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -moz-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -ms-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -o-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+}
+div.footer .container a:first-child {
+  margin-left: 0;
+}
+div.footer .container a:last-child {
+  margin-right: 0;
+}
+div.footer .container a:hover {
+  opacity: 0.8;
+}
+div.footer .container a .icon {
+  width: 36px;
+  height: 36px;
+  margin: 0 12px;
+}
+div.footer .container .copyright {
+  flex-grow: 0.5;
+  text-align: start;
+}
+div.main .container {
+  align-items: center;
+  justify-content: flex-start;
+}
+div.main .content {
+  color: #111111;
+  font-size: 16px;
+}
+div.main .content .title-container {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-justify-content: space-between;
+  -moz-justify-content: space-between;
+  -ms-justify-content: space-between;
+  justify-content: space-between;
+}
+div.main .content .posts {
+  
+  
+  
+  
+}
+div.main .content .page-heading {
+  font-size: 24px;
+  font-weight: normal;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  color: #333333;
+  margin-bottom: 16px;
+}
+
+div.main .content .front-matter .page-heading {
+  margin-bottom: 0;
+}
+div.main .content .front-matter .meta {
+  font-size: 14px;
+  color: #666666;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  margin-bottom: 32px;
+}
+div.main .content .front-matter .date,
+div.main .content .front-matter .author,
+div.main .content .front-matter .tags,
+div.main .content .front-matter .word-count,
+div.main .content .front-matter .middot:before {
+  display: none;
+}
+div.main .content .front-matter .middot:before {
+  font-size: 6px;
+  margin: 0 6px;
+  vertical-align: middle;
+  content: "•";
+}
+div.main .content .front-matter .tags ul {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+}
+div.main .content .front-matter .tags ul li {
+  -webkit-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -moz-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -ms-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -o-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+}
+div.main .content .front-matter .tags ul li:hover {
+  opacity: 0.7;
+}
+div.main .content .front-matter .tags ul li a {
+  color: #666666;
+}
+
+div.main .container.f04 {
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+}
+div.main .container.f04 .content {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+}
+div.main .container.f04 .content .num {
+  margin: 30px 0px 30px 0;
+  font-weight: 400;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  font-size: 50px;
+}
+div.main .container.f04 .content .detail {
+  margin-bottom: 40px;
+}
+div.main .container .content .groupby {
+  margin-top: 1em;
+  padding-left: 0.5em;
+}
+div.main .container .content .post-item {
+  display: flex;
+  align-items: flex-start;
+  list-style: none;
+  flex-direction: column;
+
+  margin: 1.2em;
+  text-decoration: none;
+
+  padding-top: 2em;
+  transition: .2s all;
+  margin-bottom: 3em;
+}
+
+div.main .container .content .post-item .early-access-badge {
+  display: none;
+  cursor: help;
+  font-size: 14px;
+  font-weight: bold;
+  color: black;
+
+  background: #ffe455;
+  padding: 0 20px;
+  height: 48px;
+}
+
+div.main .container .content .post-item.early-access .early-access-badge {
+  display: flex;
+  align-items: center;
+}
+
+div.main .container .content .post-item.early-access .early-access-badge-text {
+  display: none;
+}
+
+div.main .container .content .post-item.early-access .early-access-badge:before {
+  background: url("/img/common/bear-glasses.svg");
+  content: " ";
+  width: 2.4em;
+  height: 2.4em;
+}
+
+div.main .container .content .post-item .post-series {
+  margin-top: .3em;
+  font-size: 14px;
+
+  background: #e0eaff;
+  border-left: 2px solid #98c7ff;
+  padding: 4px 6px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+div.main .container .content .post-item .post-series a {
+  color: inherit;
+  text-decoration: none;
+}
+
+div.main .container .content .post-item .post-meta {
+  font-size: 14px;
+  color: #666666;
+}
+
+div.main .container .content .post-item .post-meta a {
+  color: inherit;
+}
+
+div.main .container .content .post-item .post-summary {
+  font-size: 16px;
+  padding-top: 1em;
+}
+
+div.main .container .content .post-item .post-summary em {
+  font-style: italic;
+}
+
+div.main .container .content .post-item .post-summary code {
+  margin-top: 1em;
+  font-size: 80%;
+}
+
+div.main .container .content .post-item .post-summary h1, h2, h3, h4, h5, h6 {
+  margin-top: .5em;
+  font-weight: bold;
+}
+
+div.main .container .content .post-item .post-summary p {
+  margin: .5em 0;
+}
+
+div.main .container .content .post-item .post-summary ul {
+  list-style-type: initial;
+  margin-top: .5em;
+  margin-bottom: .5em;
+}
+
+div.main .container .content .post-item .post-summary ul li {
+  margin-left: 2em;
+}
+
+div.main .container .content .post-item .post-summary p:last-of-type {
+  margin-bottom: 0;
+}
+
+div.main .container .content .post-item .post-bottombar {
+  width: 100%;
+  margin-top: 1em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+div.main .container .content .post-item .post-readmore {
+  background: #292929;
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  font-weight: 700;
+  padding: .8em 4em;
+  font-size: 14px;
+
+  align-self: flex-end;
+  height: 48px;
+}
+
+div.main .container .content .post-item .middot:before {
+  font-size: 6px;
+  margin: 0 6px;
+  vertical-align: middle;
+  content: "•";
+}
+
+div.main .container .content .post-item .post-title {
+  font-weight: bold;
+  font-size: 18px;
+  color: black;
+  text-decoration: underline;
+}
+
+div.main .container .content .see-more {
+  background: #292929;
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  font-weight: 700;
+  padding: .8em 4em;
+  margin-top: 1em;
+  font-size: 16px;
+
+  display: block;
+  width: 100%:
+}
+
+section {
+  padding: 0 16px;
+}
+div.column {
+  padding: 0 16px;
+}
+div.header {
+  padding-top: 10px;
+}
+div.header-home {
+  padding-top: 36px;
+}
+div.main {
+  padding-top: 32px;
+}
+div.main .container .content .post-item {
+    display: flex;
+    list-style: none;
+}
+a {
+  color: #af1a00;
+  -webkit-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -moz-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -ms-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -o-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+}
+a:hover {
+  color: #e22b0b;
+}
+a:visited {
+  color: #8223c1;
+}
+
+img, video {
+  max-width: 100%;
+}
+
+div.main .content {
+  width: 100%;
+}
+div.main .content .markdown {
+  font-size: 1.1em;
+  line-height: 1.75em;
+  color: #313537;
+  font-family: serif;
+  font-weight: 300;
+}
+
+div.main .content .markdown h1,
+div.main .content .markdown h2,
+div.main .content .markdown h3,
+div.main .content .markdown h4,
+div.main .content .markdown h5,
+div.main .content .markdown h6 {
+  font-size: 22px;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  letter-spacing: -0.005rem;
+  font-weight: 700;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  color: #333333;
+  text-transform: none;
+  margin-top: 1.75rem;
+}
+div.main .content .markdown h1 {
+  font-size: 1.75rem;
+  margin-bottom: 2rem;
+}
+div.main .content .markdown h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+div.main .content .markdown h3 {
+  font-size: 1em;
+  margin-bottom: 1rem;
+}
+div.main .content .markdown h4,
+div.main .content .markdown h5,
+div.main .content .markdown h6 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  letter-spacing: none;
+}
+div.main .content .markdown code,
+div.main .content .markdown pre {
+  font-size: 0.98rem;
+  background-color: #f7f7f7;
+}
+div.main .content .markdown code {
+  /* enclosed by single backtick (`) */
+  padding: .15em .5em;
+  border-radius: 2px;
+  overflow-x: auto;
+}
+div.main .content .markdown pre {
+  /* Hugo specific: consider using the 'highlight' shortcode */
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  line-height: 1.5em;
+  white-space: pre;
+  word-break: break-all;
+  word-wrap: break-word;
+  overflow-x: auto;
+}
+div.main .content .markdown pre code {
+  /* enclosed by 4 backticks (````) */
+  padding: 0;
+  font-size: 0.9rem;
+}
+div.main .content .markdown a code:hover {
+  text-decoration: underline;
+}
+div.main .content .markdown p {
+  
+  text-align: left;
+  
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+.youtube-embed {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  margin-bottom: 1em;
+}
+
+.youtube-embed iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border:0;
+}
+
+div.main .content .markdown ul,
+div.main .content .markdown ol,
+div.main .content .markdown dl {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+div.main .content .markdown li > ul,
+div.main .content .markdown li > ol,
+div.main .content .markdown li > dl {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.main .content .markdown dt {
+  font-weight: bold;
+}
+div.main .content .markdown dd {
+  margin-bottom: .5rem;
+}
+div.main .content .markdown ul {
+  list-style-type: disc;
+  list-style-position: outside;
+  margin-bottom: 1.25rem;
+}
+div.main .content .markdown ol {
+  list-style-type: decimal;
+  margin-bottom: 1.25rem;
+}
+div.main .content .markdown li {
+  margin-left: 2em;
+}
+div.main .content .markdown em {
+  font-style: italic;
+}
+div.main .content .markdown strong {
+  font-weight: 700;
+}
+div.main .content .markdown hr {
+  position: relative;
+  margin: 1.75rem 0;
+  border: 0;
+  border-top: 1px solid #808080;
+  border-top: 1px solid #999999;
+}
+div.main .content .markdown abbr {
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #666666;
+  text-transform: uppercase;
+}
+div.main .content .markdown abbr[title] {
+  cursor: help;
+  border-bottom: 1px dotted #808080;
+}
+div.main .content .markdown blockquote {
+  padding: .5rem 1rem;
+  margin: .8rem 0;
+  color: #2d2d2d;
+  font-size: 15px;
+  background: #fbfbfb;
+  border-left: .25rem solid #e5e5e5;
+}
+div.main .content .markdown blockquote h1:first-child,
+div.main .content .markdown blockquote h2:first-child,
+div.main .content .markdown blockquote h3:first-child,
+div.main .content .markdown blockquote h4:first-child,
+div.main .content .markdown blockquote h5:first-child,
+div.main .content .markdown blockquote h6:first-child {
+  margin-top: 0;
+}
+div.main .content .markdown blockquote p:last-child {
+  margin-bottom: 0;
+}
+div.main .content .markdown figure {
+  width: 100%;
+  background: #fff;
+  margin-bottom: 1em;
+  border: 1px solid rgb(218, 213, 213);
+  box-shadow: 0 0 10px rgb(233, 233, 233);
+  border-radius: 2px;
+}
+div.main .content .markdown figure figcaption {
+  font-size: 16px;
+  padding: 15px;
+}
+div.main .content .markdown figure figcaption h4 {
+  margin: 0;
+  font-weight: normal;
+}
+div.main .content .markdown figure figcaption p:last-child {
+  margin-bottom: 0;
+}
+div.main .content .markdown figure img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  display: block;
+  position: static;
+  margin: auto;
+}
+div.main .content .markdown img,
+div.main .content .markdown video,
+div.main .content .markdown figure img {
+  max-width: 95vw;
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+
+div.main .content .markdown img.odd,
+div.main .content .markdown figure img.odd,
+div.main .content .markdown video.odd {
+  padding-right: 1px;
+}
+
+div.main .content .markdown table {
+  margin-bottom: 1rem;
+  width: 100%;
+  border: 1px solid #e5e5e5;
+  border-collapse: collapse;
+}
+div.main .content .markdown td,
+div.main .content .markdown th {
+  padding: .25rem .5rem;
+  border: 1px solid #e5e5e5;
+}
+div.main .content .markdown tbody tr:nth-child(odd) td,
+div.main .content .markdown tbody tr:nth-child(odd) th {
+  background-color: #f7f7f7;
+}
+div.main .content .markdown .footnotes ol {
+  list-style-type: decimal;
+  margin-left: 16px;
+}
+div.main .content .markdown .footnotes li {
+  list-style-type: unset;
+}
+div.main .content .markdown .footnote-ref {
+  font-size: 0.7em;
+}
+div.main .content .navigation {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  padding: 2em;
+}
+div.main .content .navigation div {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  margin-top: 1em;
+}
+div.main .content .navigation .icon {
+  width: 16px;
+  height: 16px;
+}
+div.main .content .navigation a {
+  width: 250px;
+  margin: 0 1em;
+  text-align: center;
+  font-style: italic;
+  color: #313537;
+}
+div.main .content .share, div.main .content .share div {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  justify-content: center;
+}
+div.main .content .share {
+  background-color: rgba(152, 152, 152, 0.07);
+  padding: 1em 0;
+}
+div.main .content .share a {
+  margin: 0 6px;
+}
+kbd {
+  padding: 0.1em 0.6em;
+  border: 1px solid #ccc;
+  font-size: 11px;
+  font-family: Arial,Helvetica,sans-serif;
+  background-color: #f7f7f7;
+  color: #333;
+  -moz-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2),0 0 0 2px #ffffff inset;
+  -webkit-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2),0 0 0 2px #ffffff inset;
+  box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2),0 0 0 2px #ffffff inset;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  display: inline-block;
+  margin: 0 0.1em;
+  text-shadow: 0 1px 0 #fff;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+/* Fonts */
+
+body, 
+div.header nav ul a,
+div.main .content .page-heading,
+div.main .container.f04 .content .num,
+div.main .content .markdown h1,
+div.main .content .markdown h2,
+div.main .content .markdown h3,
+div.main .content .markdown h4,
+div.main .content .markdown h5,
+div.main .content .markdown h6 {
+  font-family: 'Raleway';
+}
+
+div.main .content .markdown {
+  font-family: 'Merriweather';
+}
+
+div.main .content .markdown code,
+div.main .content .markdown pre {
+  font-family: 'Cascadia Code', monospace;
+  font-variant-ligatures: none;
+}
+
+.button {
+  background-color: #9B320F;
+  border: 1px solid #ba4336;
+  box-shadow: 0 0 0 1px #863727;
+  border-radius: 4px;
+  padding: 4px 14px;
+  opacity: 1;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.atcb-list {
+  border: 2px solid #ccc;
+}
+
+.atcb-list .atcb-item {
+  padding: 6px 12px;
+}
+
+.atcb-list .atcb-item-link:hover {
+  text-decoration: underline;
+}
+
+.local-datetime {
+  font-weight: bold;
+}
+
+.button,
+.button:hover,
+.button:visited {
+  color: white;
+}
+
+.button:hover {
+  opacity: .9;
+  cursor: pointer;
+}
+
+.button img {
+  margin-right: .7em;
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.patreon_plug {
+  padding-top: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 16px;
+  border-top: 1px solid#999999;
+}
+
+.patreon_plug p {
+  margin: .5em 0;
+}
+
+.post .markdown p.patreon_credits {
+  color: #9e1919;
+  text-align: left;
+  font-family: Raleway;
+  line-height: 1.6;
+  font-size: 13px;
+}
+
+div.main .content .markdown .series {
+  font-size: 14px;
+}
+
+div.main .content .markdown .series .series-boxes {
+  display: flex;
+  justify-content: space-between;
+}
+
+div.main .content .markdown .series .series-boxes .series-box {
+  flex-basis: 50%;
+
+  border: 1px solid #9fde9f;
+  background-color: #f4fdf4;
+  padding: .5em 1em;
+  text-decoration: none;
+  text-align: center;
+}
+
+div.main .content .markdown .series .series-boxes .series-box .label {
+  color: black;
+}
+
+div.main .content .markdown .series .series-boxes .series-box .title {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+div.main .content .markdown .series .series-boxes .series-box .title {
+  color: #af1a00;
+}
+
+div.main .content .markdown .series .series-boxes .series-box:hover .title {
+  color: #e22b0b;
+}
+
+div.main .content .markdown .series .series-boxes .series-box:visited .title {
+  color: #8223c1;
+}
+
+div.main .content .markdown .series .series-boxes .spacer {
+  flex-grow: 1;
+}
+
+div.main .content .markdown .series .series-boxes .series-box.previous {
+  margin-right: 2em;
+}
+
+div.main .content .markdown .series .series-boxes .series-box.next {
+  margin-left: 2em;
+}
+
+  /*
+ * Recap
+ */
+
+div.main .content .markdown div.recap {
+  padding: 15px;
+  padding-bottom: 0;
+  border: 1px solid #84b2fe;
+  border-left-width: 4px;
+  background: #f5f9ff;
+  margin-bottom: 1em;
+}
+
+div.main .content .markdown div.recap.series {
+  border-color: #9fde9f;
+  background-color: #f4fdf4;
+}
+
+div.main .content .markdown div.recap ul {
+  font-size: 80%;
+}
+
+div.main .content .markdown div.recap p {
+  font-size: 80%;
+}
+div.main .content .markdown div.recap div.recap-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-bottom: 1em;
+  color: #284A82;
+}
+div.main .content .markdown div.recap div.recap-header img {
+  margin-left: 0;
+  transform: none;
+  margin-right: 0.5em;
+  height: 3em;
+}
+
+/*
+ * Tip
+ */
+
+div.main .content .markdown div.tip {
+  padding: 15px;
+  padding-bottom: 0;
+  border: 1px solid #f3dd68;
+  border-left-width: 4px;
+  background: #fefdf6;
+  margin-bottom: 1em;
+}
+div.main .content .markdown div.tip p {
+  font-size: 80%;
+}
+div.main .content .markdown div.tip pre {
+  width: 100%;
+  margin-left: 0;
+  transform: none;
+}
+div.main .content .markdown div.tip div.tip-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-bottom: 1em;
+  color: #5B5844;
+}
+div.main .content .markdown div.tip div.tip-header img {
+  margin-left: 0;
+  transform: none;
+  margin-right: 0.5em;
+  height: 3em;
+}
+
+</style>
+<style media="(min-width: 600px)">
+  body {
+  justify-content: center;
+}
+.non-narrow.zero-top-spacing {
+  padding-top: 0 !important;
+}
+section {
+  padding: 0 16px;
+  margin-left: 100px;
+  margin-right: 100px;
+  max-width: 825px;
+}
+div.column {
+  padding: 0 16px;
+  max-width: 825px;
+}
+div.header {
+  background-color: transparent;
+}
+div.header .container {
+  justify-content: flex-start;
+}
+div.header .container .logo {
+  margin-right: 2em;
+}
+div.header-home .container .logo {
+  max-width: 160px;
+  margin-right: 2em;
+}
+div.header-home .name-home {
+  padding-top: 30px;
+  font-size: 40px;
+}
+div.header-home nav ul a {
+  font-size: 18px;
+}
+div.header .content {
+  align-items: flex-start;
+}
+div.header .name {
+  font-size: 28px;
+  color: #333333;
+}
+div.header nav {
+  font-size: 14px;
+  margin-bottom: 0;
+}
+div.header nav ul {
+  text-align: left;
+}
+div.header nav ul a {
+  color: #666666;
+}
+div.header nav ul a:hover {
+  color: #333333;
+}
+div.footer {
+  background-color: transparent;
+}
+div.footer .container {
+  flex-direction: row;
+}
+div.footer .container a {
+  margin-left: 3px;
+  margin-right: 3px;
+  color: #666666;
+}
+div.footer .container a:hover {
+  color: #333333;
+}
+div.footer .container a .icon {
+  font-size: 18px;
+}
+div.footer .container a .icon.larger {
+  font-size: 20px;
+}
+div.main .content .front-matter .date,
+div.main .content .front-matter .author,
+div.main .content .front-matter .tags,
+div.main .content .front-matter .word-count,
+div.main .content .front-matter .middot:before {
+  display: initial;
+}
+div.main .container.f04 {
+  justify-content: flex-start;
+}
+div.main .container.f04 .content {
+  align-items: flex-start;
+}
+div.main .container.f04 .content .num {
+  margin: 0 0 10px 0;
+  font-size: 32px;
+}
+div.main .container.f04 .content .detail {
+  margin-bottom: 30px;
+}
+.container {
+  padding: 0 30px;
+}
+div.header {
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+div.footer {
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+div.main {
+  padding-top: 0;
+}
+div.main .content {
+  font-size: 17px;
+}
+div.main .container .content .post-item {
+  display: flex;
+  list-style: none;
+  padding-left: 1.5em;
+  border: 1px solid #ddd;
+}
+div.main .container .content .post-item.early-access {
+  border: 1px solid #ffe455;
+}
+div.main .container .content .post-item.early-access .early-access-badge-text {
+  display: initial;
+}
+div.main .container .content .post-item.early-access .early-access-badge:before {
+  margin-right: .5em;
+}
+div.main .content .markdown blockquote {
+  padding-right: 5rem;
+  padding-left: 1.25rem;
+}
+div.main .content .navigation {
+  flex-direction: row;
+}
+div.main .content .navigation div {
+  margin-top: 0em;
+}
+
+</style>
+<style media="(min-width: 1200px)">
+  
+div.main .content .markdown pre {
+    width: 1000px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
+</style>
+
+<link href="amos%20-%20A%20half-hour%20to%20learn%20Rust_files/css.css" rel="stylesheet">
+<link href="amos%20-%20A%20half-hour%20to%20learn%20Rust_files/css_002.css" rel="stylesheet">
+
+
+  <link rel="stylesheet" href="amos%20-%20A%20half-hour%20to%20learn%20Rust_files/tomorrow.css">
+
+
+
+
+
+
+
+
+  <style type="text/css" media="screen">
+    .addtocalendar var{display:none}.addtocalendar{position:relative;display:inline-block;background:transparent!important}.atcb-link{display:block;outline:none!important;cursor:pointer}.atcb-link:active~ul,.atcb-link:focus~ul,.atcb-list:hover{visibility:visible}.atcb-list{visibility:hidden;position:absolute;top:100%;left:0;width:170px;z-index:1}.atcb-item,.atcb-list{list-style:none;margin:0;padding:0;background:#fff}.atcb-item{float:none;text-align:left}.atcb-item-link{text-decoration:none;outline:none;display:block}.atcb-item.hover,.atcb-item:hover{position:relative;z-index:1;cursor:pointer;text-decoration:none;outline:none}
+  </style>
+
+
+
+
+<link rel="shortcut icon" href="https://fasterthanli.me/img/logo-round.png">
+
+</head>
+
+
+<body>
+
+
+<div class="header column">
+
+    <div class="container">
+        
+        <a href="https://fasterthanli.me/"><img class="logo" src="amos%20-%20A%20half-hour%20to%20learn%20Rust_files/logo-round-border.png" alt="logo"></a>
+        
+        <div class="content">
+            <a href="https://fasterthanli.me/"><div class="name"><h1>amos loves to tinker</h1></div></a>
+            <nav>
+                <ul>
+                    
+                            <li><a href="https://fasterthanli.me/blog/">Blog</a></li>
+                    
+                    
+                        
+                            
+                        
+                    
+                    
+                        
+                            <li><a href="https://fasterthanli.me/about/">About</a></li>
+                        
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="main post non-narrow zero-top-spacing column">
+  <div class="container">
+    <div class="content">
+      <div class="front-matter">
+        <div class="title-container">
+          <div class="page-heading">
+
+    
+    A half-hour to learn Rust
+    
+
+</div>
+
+        </div>
+        <div class="meta">
+          <div class="date" title="Mon Jan 27 2020 14:30:00 UTC">
+            Jan 27, 2020</div>
+          
+          
+          
+          
+          <div class="reading-time middot">29 minute read</div>
+          
+          
+            <div class="tags">
+              
+              <ul>
+                
+                <li class="middot"><a href="https://fasterthanli.me/tags/rust">rust</a> </li>
+                
+              </ul>
+            </div>
+            <div class="tags">
+              <ul>
+                
+                
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+
+        
+        <div class="markdown">
+          
+
+
+          
+    <p>In order to increase fluency in a programming language, one has to read a lot of it.
+But how can you read a lot of it if you don't know what it means?</p>
+<p>In this article, instead of focusing on one or two concepts, I'll try to go
+through as many Rust snippets as I can, and explain what the keywords and symbols
+they contain mean.</p>
+<p>Ready? Go!</p>
+<p><code>let</code> introduces a variable binding:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">let</span> x; <span class="hljs-comment">// declare "x"</span>
+x = <span class="hljs-number">42</span>; <span class="hljs-comment">// assign 42 to "x"</span>
+</code></pre>
+<p>This can also be written as a single line:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">let</span> x = <span class="hljs-number">42</span>;
+</code></pre>
+<p>You can specify the variable's type explicitly with <code>:</code>, that's a type annotation:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">let</span> x: <span class="hljs-built_in">i32</span>; <span class="hljs-comment">// `i32` is a signed 32-bit integer</span>
+x = <span class="hljs-number">42</span>;
+
+<span class="hljs-comment">// there's i8, i16, i32, i64, i128</span>
+<span class="hljs-comment">//    also u8, u16, u32, u64, u128 for unsigned</span>
+</code></pre>
+<p>This can also be written as a single line:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">let</span> x: <span class="hljs-built_in">i32</span> = <span class="hljs-number">42</span>;
+</code></pre>
+<p>If you declare a name and initialize it later, the compiler will prevent you
+from using it before it's initialized.</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">let</span> x;
+foobar(x); <span class="hljs-comment">// error: borrow of possibly-uninitialized variable: `x`</span>
+x = <span class="hljs-number">42</span>;
+</code></pre>
+<p>However, doing this is completely fine:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">let</span> x;
+x = <span class="hljs-number">42</span>;
+foobar(x); <span class="hljs-comment">// the type of `x` will be inferred from here</span>
+</code></pre>
+<p>The underscore <code>_</code> is a special name - or rather, a “lack of name”. It
+basically means to throw away something:</p>
+<pre><code class="language-rust hljs"><span class="hljs-comment">// this does *nothing* because 42 is a constant</span>
+<span class="hljs-keyword">let</span> _ = <span class="hljs-number">42</span>;
+
+<span class="hljs-comment">// this calls `get_thing` but throws away its result</span>
+<span class="hljs-keyword">let</span> _ = get_thing();
+</code></pre>
+<p>Names that <em>start</em> with an underscore are regular names, it's just that
+the compiler won't warn about them being unused:</p>
+<pre><code class="language-rust hljs"><span class="hljs-comment">// we may use `_x` eventually, but our code is a work-in-progress</span>
+<span class="hljs-comment">// and we just wanted to get rid of a compiler warning for now.</span>
+<span class="hljs-keyword">let</span> _x = <span class="hljs-number">42</span>;
+</code></pre>
+<p>Separate bindings with the same name can be introduced - you can <em>shadow</em>
+a variable binding:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">let</span> x = <span class="hljs-number">13</span>;
+<span class="hljs-keyword">let</span> x = x + <span class="hljs-number">3</span>;
+<span class="hljs-comment">// using `x` after that line only refers to the second `x`,</span>
+<span class="hljs-comment">// the first `x` no longer exists.</span>
+</code></pre>
+<p>Rust has tuples, which you can think of as “fixed-length collections
+of values of different types”.</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">let</span> pair = (<span class="hljs-string">'a'</span>, <span class="hljs-number">17</span>);
+pair.<span class="hljs-number">0</span>; <span class="hljs-comment">// this is 'a'</span>
+pair.<span class="hljs-number">1</span>; <span class="hljs-comment">// this is 17</span>
+</code></pre>
+<p>If we really we wanted to annotate the type of <code>pair</code>, we would write:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">let</span> pair: (<span class="hljs-built_in">char</span>, <span class="hljs-built_in">i32</span>) = (<span class="hljs-string">'a'</span>, <span class="hljs-number">17</span>);
+</code></pre>
+<p>Tuples can be <em>destructured</em> when doing an assignment, which means
+they're broken down into their individual fields:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">let</span> (some_char, some_int) = (<span class="hljs-string">'a'</span>, <span class="hljs-number">17</span>);
+<span class="hljs-comment">// now, `some_char` is 'a', and `some_int` is 17</span>
+</code></pre>
+<p>This is especially useful when a function returns a tuple:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">let</span> (left, right) = slice.split_at(middle);
+</code></pre>
+<p>Of course, when destructuring a tuple, <code>_</code> can be used to throw away part of it:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">let</span> (_, right) = slice.split_at(middle);
+</code></pre>
+<p>The semi-colon marks the end of a statement:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">let</span> x = <span class="hljs-number">3</span>;
+<span class="hljs-keyword">let</span> y = <span class="hljs-number">5</span>;
+<span class="hljs-keyword">let</span> z = y + x;
+</code></pre>
+<p>Which means statements can span multiple lines:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">let</span> x = <span class="hljs-built_in">vec!</span>[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>]
+    .iter()
+    .map(|x| x + <span class="hljs-number">3</span>)
+    .fold(<span class="hljs-number">0</span>, |x, y| x + y);
+</code></pre>
+<p>(We'll go over what those actually mean later).</p>
+<p><code>fn</code> declares a function.</p>
+<p>Here's a void function:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">greet</span></span>() {
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"Hi there!"</span>);
+}
+</code></pre>
+<p>And here's a function that returns a 32-bit signed integer. The
+arrow indicates its return type:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">fair_dice_roll</span></span>() -&gt; <span class="hljs-built_in">i32</span> {
+    <span class="hljs-number">4</span>
+}
+</code></pre>
+<p>A pair of brackets declares a block, which has its own scope:</p>
+<pre><code class="language-rust hljs"><span class="hljs-comment">// This prints "in", then "out"</span>
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> x = <span class="hljs-string">"out"</span>;
+    {
+        <span class="hljs-comment">// this is a different `x`</span>
+        <span class="hljs-keyword">let</span> x = <span class="hljs-string">"in"</span>;
+        <span class="hljs-built_in">println!</span>(x);
+    }
+    <span class="hljs-built_in">println!</span>(x);
+}
+</code></pre>
+<p>Blocks are also expressions, which mean they evaluate to.. a value.</p>
+<pre><code class="language-rust hljs"><span class="hljs-comment">// this:</span>
+<span class="hljs-keyword">let</span> x = <span class="hljs-number">42</span>;
+
+<span class="hljs-comment">// is equivalent to this:</span>
+<span class="hljs-keyword">let</span> x = { <span class="hljs-number">42</span> };
+</code></pre>
+<p>Inside a block, there can be multiple statements:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">let</span> x = {
+    <span class="hljs-keyword">let</span> y = <span class="hljs-number">1</span>; <span class="hljs-comment">// first statement</span>
+    <span class="hljs-keyword">let</span> z = <span class="hljs-number">2</span>; <span class="hljs-comment">// second statement</span>
+    y + z <span class="hljs-comment">// this is the *tail* - what the whole block will evaluate to</span>
+};
+</code></pre>
+<p>And that's why “omitting the semicolon at the end of a function” is the same
+as returning, ie. these are equivalent:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">fair_dice_roll</span></span>() -&gt; <span class="hljs-built_in">i32</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-number">4</span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">fair_dice_roll</span></span>() -&gt; <span class="hljs-built_in">i32</span> {
+    <span class="hljs-number">4</span>
+}
+</code></pre>
+<p><code>if</code> conditionals are also expressions:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">fair_dice_roll</span></span>() -&gt; <span class="hljs-built_in">i32</span> {
+    <span class="hljs-keyword">if</span> feeling_lucky {
+        <span class="hljs-number">6</span>
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-number">4</span>
+    }
+}
+</code></pre>
+<p>A <code>match</code> is also an expression:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">fair_dice_roll</span></span>() -&gt; <span class="hljs-built_in">i32</span> {
+    <span class="hljs-keyword">match</span> feeling_lucky {
+        <span class="hljs-literal">true</span> =&gt; <span class="hljs-number">6</span>,
+        <span class="hljs-literal">false</span> =&gt; <span class="hljs-number">4</span>,
+    }
+}
+</code></pre>
+<p>Dots are typically used to access fields of a value:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">let</span> a = (<span class="hljs-number">10</span>, <span class="hljs-number">20</span>);
+a.<span class="hljs-number">0</span>; <span class="hljs-comment">// this is 10</span>
+
+<span class="hljs-keyword">let</span> amos = get_some_struct();
+amos.nickname; <span class="hljs-comment">// this is "fasterthanlime"</span>
+</code></pre>
+<p>Or call a method on a value:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">let</span> nick = <span class="hljs-string">"fasterthanlime"</span>;
+nick.len(); <span class="hljs-comment">// this is 14</span>
+</code></pre>
+<p>The double-colon, <code>::</code>, is similar but it operates on namespaces.</p>
+<p>In this example, <code>std</code> is a <em>crate</em> (~ a library), <code>cmp</code> is a <em>module</em>
+(~ a source file), and <code>min</code> is a <em>function</em>:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">let</span> least = std::cmp::min(<span class="hljs-number">3</span>, <span class="hljs-number">8</span>); <span class="hljs-comment">// this is 3</span>
+</code></pre>
+<p><code>use</code> directives can be used to “bring in scope” names from other
+namespace:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">use</span> std::cmp::min;
+
+<span class="hljs-keyword">let</span> least = min(<span class="hljs-number">7</span>, <span class="hljs-number">1</span>); <span class="hljs-comment">// this is 1</span>
+</code></pre>
+<p>Within <code>use</code> directives, curly brackets have another meaning: they're
+“globs”. If we want to import both <code>min</code> and <code>max</code>, we can do any
+of these:</p>
+<pre><code class="language-rust hljs"><span class="hljs-comment">// this works:</span>
+<span class="hljs-keyword">use</span> std::cmp::min;
+<span class="hljs-keyword">use</span> std::cmp::max;
+
+<span class="hljs-comment">// this also works:</span>
+<span class="hljs-keyword">use</span> std::cmp::{min, max};
+
+<span class="hljs-comment">// this also works!</span>
+<span class="hljs-keyword">use</span> std::{cmp::min, cmp::max};
+</code></pre>
+<p>A wildcard (<code>*</code>) lets you import every symbol from a namespace:</p>
+<pre><code class="language-rust hljs"><span class="hljs-comment">// this brings `min` and `max` in scope, and many other things</span>
+<span class="hljs-keyword">use</span> std::cmp::*;
+</code></pre>
+<p>Types are namespaces too, and methods can be called as regular functions:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">let</span> x = <span class="hljs-string">"amos"</span>.len(); <span class="hljs-comment">// this is 4</span>
+<span class="hljs-keyword">let</span> x = <span class="hljs-built_in">str</span>::len(<span class="hljs-string">"amos"</span>); <span class="hljs-comment">// this is also 4</span>
+</code></pre>
+<p><code>str</code> is a primitive type, but many non-primitive types are also in scope
+by default.</p>
+<pre><code class="language-rust hljs"><span class="hljs-comment">// `Vec` is a regular struct, not a primitive type</span>
+<span class="hljs-keyword">let</span> v = <span class="hljs-built_in">Vec</span>::new();
+
+<span class="hljs-comment">// this is exactly the same code, but with the *full* path to `Vec`</span>
+<span class="hljs-keyword">let</span> v = std::vec::<span class="hljs-built_in">Vec</span>::new();
+</code></pre>
+<p>This works because Rust inserts this at the beginning of every module:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">use</span> std::prelude::v1::*;
+</code></pre>
+<p>(Which in turns re-exports a lot of symbols, like <code>Vec</code>, <code>String</code>, <code>Option</code> and <code>Result</code>).</p>
+<p>Structs are declared with the <code>struct</code> keyword:</p>
+<pre><code class="language-rust hljs"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Vec2</span></span> {
+    x: <span class="hljs-built_in">f64</span>, <span class="hljs-comment">// 64-bit floating point, aka "double precision"</span>
+    y: <span class="hljs-built_in">f64</span>,
+}
+</code></pre>
+<p>They can be initialized using <em>struct literals</em>:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">let</span> v1 = Vec2 { x: <span class="hljs-number">1.0</span>, y: <span class="hljs-number">3.0</span> };
+<span class="hljs-keyword">let</span> v2 = Vec2 { y: <span class="hljs-number">2.0</span>, x: <span class="hljs-number">4.0</span> };
+<span class="hljs-comment">// the order does not matter, only the names do</span>
+</code></pre>
+<p>There is a shortcut for initializing the <em>rest of the fields</em> from
+another struct:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">let</span> v3 = Vec2 {
+    x: <span class="hljs-number">14.0</span>,
+    ..v2
+};
+</code></pre>
+<p>This is called “struct update syntax”, can only happen in last position,
+and cannot be followed by a comma.</p>
+<p>Note that <em>the rest of the fields</em> can mean <em>all the fields</em>:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">let</span> v4 = Vec2 { ..v3 };
+</code></pre>
+<p>Structs, like tuples, can be destructured.</p>
+<p>Just like this is a valid <code>let</code> pattern:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">let</span> (left, right) = slice.split_at(middle);
+</code></pre>
+<p>So is this:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">let</span> v = Vec2 { x: <span class="hljs-number">3.0</span>, y: <span class="hljs-number">6.0</span> };
+<span class="hljs-keyword">let</span> Vec2 { x, y } = v;
+<span class="hljs-comment">// `x` is now 3.0, `y` is now `6.0`</span>
+</code></pre>
+<p>And this:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">let</span> Vec2 { x, .. } = v;
+<span class="hljs-comment">// this throws away `v.y`</span>
+</code></pre>
+<p><code>let</code> patterns can be used as conditions in <code>if</code>:</p>
+<pre><code class="language-rust hljs"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Number</span></span> {
+    odd: <span class="hljs-built_in">bool</span>,
+    value: <span class="hljs-built_in">i32</span>,
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> one = Number { odd: <span class="hljs-literal">true</span>, value: <span class="hljs-number">1</span> };
+    <span class="hljs-keyword">let</span> two = Number { odd: <span class="hljs-literal">false</span>, value: <span class="hljs-number">2</span> };
+    print_number(one);
+    print_number(two);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">print_number</span></span>(n: Number) {
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> Number { odd: <span class="hljs-literal">true</span>, value } = n {
+        <span class="hljs-built_in">println!</span>(<span class="hljs-string">"Odd number: {}"</span>, value);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> Number { odd: <span class="hljs-literal">false</span>, value } = n {
+        <span class="hljs-built_in">println!</span>(<span class="hljs-string">"Even number: {}"</span>, value);
+    }
+}
+
+<span class="hljs-comment">// this prints:</span>
+<span class="hljs-comment">// Odd number: 1</span>
+<span class="hljs-comment">// Even number: 2</span>
+</code></pre>
+<p><code>match</code> arms are also patterns, just like <code>if let</code>:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">print_number</span></span>(n: Number) {
+    <span class="hljs-keyword">match</span> n {
+        Number { odd: <span class="hljs-literal">true</span>, value } =&gt; <span class="hljs-built_in">println!</span>(<span class="hljs-string">"Odd number: {}"</span>, value),
+        Number { odd: <span class="hljs-literal">false</span>, value } =&gt; <span class="hljs-built_in">println!</span>(<span class="hljs-string">"Even number: {}"</span>, value),
+    }
+}
+
+<span class="hljs-comment">// this prints the same as before</span>
+</code></pre>
+<p>A <code>match</code> has to be exhaustive: at least one arm needs to match.</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">print_number</span></span>(n: Number) {
+    <span class="hljs-keyword">match</span> n {
+        Number { value: <span class="hljs-number">1</span>, .. } =&gt; <span class="hljs-built_in">println!</span>(<span class="hljs-string">"One"</span>),
+        Number { value: <span class="hljs-number">2</span>, .. } =&gt; <span class="hljs-built_in">println!</span>(<span class="hljs-string">"Two"</span>),
+        Number { value, .. } =&gt; <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{}"</span>, value),
+        <span class="hljs-comment">// if that last arm didn't exist, we would get a compile-time error</span>
+    }
+}
+</code></pre>
+<p>If that's hard, <code>_</code> can be used as a “catch-all” pattern:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">print_number</span></span>(n: Number) {
+    <span class="hljs-keyword">match</span> n.value {
+        <span class="hljs-number">1</span> =&gt; <span class="hljs-built_in">println!</span>(<span class="hljs-string">"One"</span>),
+        <span class="hljs-number">2</span> =&gt; <span class="hljs-built_in">println!</span>(<span class="hljs-string">"Two"</span>),
+        _ =&gt; <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{}"</span>, n.value),
+    }
+}
+</code></pre>
+<p>You can declare methods on your own types:</p>
+<pre><code class="language-rust hljs"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Number</span></span> {
+    odd: <span class="hljs-built_in">bool</span>,
+    value: <span class="hljs-built_in">i32</span>,
+}
+
+<span class="hljs-keyword">impl</span> Number {
+    <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">is_strictly_positive</span></span>(<span class="hljs-keyword">self</span>) -&gt; <span class="hljs-built_in">bool</span> {
+        <span class="hljs-keyword">self</span>.value &gt; <span class="hljs-number">0</span>
+    }
+}
+</code></pre>
+<p>And use them like usual:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> minus_two = Number {
+        odd: <span class="hljs-literal">false</span>,
+        value: -<span class="hljs-number">2</span>,
+    };
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"positive? {}"</span>, minus_two.is_strictly_positive());
+    <span class="hljs-comment">// this prints "positive? false"</span>
+}
+</code></pre>
+<p>Variable bindings are immutable by default:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> n = Number {
+        odd: <span class="hljs-literal">true</span>,
+        value: <span class="hljs-number">17</span>,
+    };
+    n.odd = <span class="hljs-literal">false</span>; <span class="hljs-comment">// error: cannot assign to `n.odd`,</span>
+                   <span class="hljs-comment">// as `n` is not declared to be mutable</span>
+}
+</code></pre>
+<p>An immutable variable binding cannot have its interior mutated (like
+we just tried), but it also cannot be assigned to:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> n = Number {
+        odd: <span class="hljs-literal">true</span>,
+        value: <span class="hljs-number">17</span>,
+    };
+    n = Number {
+        odd: <span class="hljs-literal">false</span>,
+        value: <span class="hljs-number">22</span>,
+    }; <span class="hljs-comment">// error: cannot assign twice to immutable variable `n`</span>
+}
+</code></pre>
+<p><code>mut</code> makes a variable binding mutable:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> n = Number {
+        odd: <span class="hljs-literal">true</span>,
+        value: <span class="hljs-number">17</span>,
+    }
+    n.value = <span class="hljs-number">19</span>; <span class="hljs-comment">// all good</span>
+}
+</code></pre>
+<p>Traits are something multiple types can have in common:</p>
+<pre><code class="language-rust hljs"><span class="hljs-class"><span class="hljs-keyword">trait</span> <span class="hljs-title">Signed</span></span> {
+    <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">is_strictly_negative</span></span>(<span class="hljs-keyword">self</span>) -&gt; <span class="hljs-built_in">bool</span>;
+}
+</code></pre>
+<p>You can implement:</p>
+<ul>
+<li>one of your traits on anyone's type</li>
+<li>anyone's trait on one of your types</li>
+<li>but not a foreign trait on a foreign type</li>
+</ul>
+<p>These are called the “orphan rules”.</p>
+<p>Here's an implementation of our trait on our type:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">impl</span> Signed <span class="hljs-keyword">for</span> Number {
+    <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">is_strictly_negative</span></span>(<span class="hljs-keyword">self</span>) -&gt; <span class="hljs-built_in">bool</span> {
+        <span class="hljs-keyword">self</span>.value &lt; <span class="hljs-number">0</span>
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> n = Number { odd: <span class="hljs-literal">false</span>, value: -<span class="hljs-number">44</span> };
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{}"</span>, n.is_strictly_negative()); <span class="hljs-comment">// prints "true"</span>
+}
+</code></pre>
+<p>Our trait on a foreign type (a primitive type, even):</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">impl</span> Signed <span class="hljs-keyword">for</span> <span class="hljs-built_in">i32</span> {
+    <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">is_strictly_negative</span></span>(<span class="hljs-keyword">self</span>) -&gt; <span class="hljs-built_in">bool</span> {
+        <span class="hljs-keyword">self</span> &lt; <span class="hljs-number">0</span>
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> n: <span class="hljs-built_in">i32</span> = -<span class="hljs-number">44</span>;
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{}"</span>, n.is_strictly_negative()); <span class="hljs-comment">// prints "true"</span>
+}
+</code></pre>
+<p>A foreign trait on our type:</p>
+<pre><code class="language-rust hljs"><span class="hljs-comment">// the `Neg` trait is used to overload `-`, the</span>
+<span class="hljs-comment">// unary minus operator.</span>
+<span class="hljs-keyword">impl</span> std::ops::Neg <span class="hljs-keyword">for</span> Number {
+    <span class="hljs-class"><span class="hljs-keyword">type</span> <span class="hljs-title">Output</span></span> = Number;
+
+    <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">neg</span></span>(<span class="hljs-keyword">self</span>) -&gt; Number {
+        Number {
+            value: -<span class="hljs-keyword">self</span>.value,
+            odd: <span class="hljs-keyword">self</span>.odd,
+        }        
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> n = Number { odd: <span class="hljs-literal">true</span>, value: <span class="hljs-number">987</span> };
+    <span class="hljs-keyword">let</span> m = -n; <span class="hljs-comment">// this is only possible because we implemented `Neg`</span>
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{}"</span>, m.value); <span class="hljs-comment">// prints "-987"</span>
+}
+</code></pre>
+<p>An <code>impl</code> block is always <em>for</em> a type, so, inside that block, <code>Self</code>
+means that type:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">impl</span> std::ops::Neg <span class="hljs-keyword">for</span> Number {
+    <span class="hljs-class"><span class="hljs-keyword">type</span> <span class="hljs-title">Output</span></span> = <span class="hljs-keyword">Self</span>;
+
+    <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">neg</span></span>(<span class="hljs-keyword">self</span>) -&gt; <span class="hljs-keyword">Self</span> {
+        <span class="hljs-keyword">Self</span> {
+            value: -<span class="hljs-keyword">self</span>.value,
+            odd: <span class="hljs-keyword">self</span>.odd,
+        }        
+    }
+}
+</code></pre>
+<p>Some traits are <em>markers</em> - they don't say that a type implements
+some methods, they say that certain things can be done with a type.</p>
+<p>For example, <code>i32</code> implements trait <code>Copy</code> (in short, <code>i32</code> <em>is</em> <code>Copy</code>),
+so this works:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> a: <span class="hljs-built_in">i32</span> = <span class="hljs-number">15</span>;
+    <span class="hljs-keyword">let</span> b = a; <span class="hljs-comment">// `a` is copied</span>
+    <span class="hljs-keyword">let</span> c = a; <span class="hljs-comment">// `a` is copied again</span>
+}
+</code></pre>
+<p>And this also works:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">print_i32</span></span>(x: <span class="hljs-built_in">i32</span>) {
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"x = {}"</span>, x);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> a: <span class="hljs-built_in">i32</span> = <span class="hljs-number">15</span>;
+    print_i32(a); <span class="hljs-comment">// `a` is copied</span>
+    print_i32(a); <span class="hljs-comment">// `a` is copied again</span>
+}
+</code></pre>
+<p>But the <code>Number</code> struct is not <code>Copy</code>, so this doesn't work:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> n = Number { odd: <span class="hljs-literal">true</span>, value: <span class="hljs-number">51</span> };
+    <span class="hljs-keyword">let</span> m = n; <span class="hljs-comment">// `n` is moved into `m`</span>
+    <span class="hljs-keyword">let</span> o = n; <span class="hljs-comment">// error: use of moved value: `n`</span>
+}
+</code></pre>
+<p>And neither does this:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">print_number</span></span>(n: Number) {
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{} number {}"</span>, <span class="hljs-keyword">if</span> n.odd { <span class="hljs-string">"odd"</span> } <span class="hljs-keyword">else</span> { <span class="hljs-string">"even"</span> }, n.value);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> n = Number { odd: <span class="hljs-literal">true</span>, value: <span class="hljs-number">51</span> };
+    print_number(n); <span class="hljs-comment">// `n` is moved</span>
+    print_number(n); <span class="hljs-comment">// error: use of moved value: `n`</span>
+}
+</code></pre>
+<p>But it works if <code>print_number</code> takes an immutable reference instead:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">print_number</span></span>(n: &amp;Number) {
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{} number {}"</span>, <span class="hljs-keyword">if</span> n.odd { <span class="hljs-string">"odd"</span> } <span class="hljs-keyword">else</span> { <span class="hljs-string">"even"</span> }, n.value);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> n = Number { odd: <span class="hljs-literal">true</span>, value: <span class="hljs-number">51</span> };
+    print_number(&amp;n); <span class="hljs-comment">// `n` is borrowed for the time of the call</span>
+    print_number(&amp;n); <span class="hljs-comment">// `n` is borrowed again</span>
+}
+</code></pre>
+<p>It also works if a function takes a <em>mutable</em> reference - but only
+if our variable binding is also <code>mut</code>.</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">invert</span></span>(n: &amp;<span class="hljs-keyword">mut</span> Number) {
+    n.value = -n.value;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">print_number</span></span>(n: &amp;Number) {
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{} number {}"</span>, <span class="hljs-keyword">if</span> n.odd { <span class="hljs-string">"odd"</span> } <span class="hljs-keyword">else</span> { <span class="hljs-string">"even"</span> }, n.value);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-comment">// this time, `n` is mutable</span>
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> n = Number { odd: <span class="hljs-literal">true</span>, value: <span class="hljs-number">51</span> };
+    print_number(&amp;n);
+    invert(&amp;<span class="hljs-keyword">mut</span> n); <span class="hljs-comment">// `n is borrowed mutably - everything is explicit</span>
+    print_number(&amp;n);
+}
+</code></pre>
+<p>Trait methods can also take <code>self</code> by reference or mutable reference:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">impl</span> std::clone::<span class="hljs-built_in">Clone</span> <span class="hljs-keyword">for</span> Number {
+    <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">clone</span></span>(&amp;<span class="hljs-keyword">self</span>) -&gt; <span class="hljs-keyword">Self</span> {
+        <span class="hljs-keyword">Self</span> { ..*<span class="hljs-keyword">self</span> }
+    }
+}
+</code></pre>
+<p>When invoking trait methods, the receiver is borrowed implicitly:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> n = Number { odd: <span class="hljs-literal">true</span>, value: <span class="hljs-number">51</span> };
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> m = n.clone();
+    m.value += <span class="hljs-number">100</span>;
+    
+    print_number(&amp;n);
+    print_number(&amp;m);
+}
+</code></pre>
+<p>To highlight this: these are equivalent:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">let</span> m = n.clone();
+
+<span class="hljs-keyword">let</span> m = std::clone::<span class="hljs-built_in">Clone</span>::clone(&amp;n);
+</code></pre>
+<p>Marker traits like <code>Copy</code> have no methods:</p>
+<pre><code class="language-rust hljs"><span class="hljs-comment">// note: `Copy` requires that `Clone` is implemented too</span>
+<span class="hljs-keyword">impl</span> std::clone::<span class="hljs-built_in">Clone</span> <span class="hljs-keyword">for</span> Number {
+    <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">clone</span></span>(&amp;<span class="hljs-keyword">self</span>) -&gt; <span class="hljs-keyword">Self</span> {
+        <span class="hljs-keyword">Self</span> { ..*<span class="hljs-keyword">self</span> }
+    }
+}
+
+<span class="hljs-keyword">impl</span> std::marker::<span class="hljs-built_in">Copy</span> <span class="hljs-keyword">for</span> Number {}
+</code></pre>
+<p>Now, <code>Clone</code> can still be used:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> n = Number { odd: <span class="hljs-literal">true</span>, value: <span class="hljs-number">51</span> };
+    <span class="hljs-keyword">let</span> m = n.clone();
+    <span class="hljs-keyword">let</span> o = n.clone();
+}
+</code></pre>
+<p>But <code>Number</code> values will no longer be moved:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> n = Number { odd: <span class="hljs-literal">true</span>, value: <span class="hljs-number">51</span> };
+    <span class="hljs-keyword">let</span> m = n; <span class="hljs-comment">// `m` is a copy of `n`</span>
+    <span class="hljs-keyword">let</span> o = n; <span class="hljs-comment">// same. `n` is neither moved nor borrowed.</span>
+}
+</code></pre>
+<p>Some traits are so common, they can be implemented automatically
+by using the <code>derive</code> attribute:</p>
+<pre><code class="language-rust hljs"><span class="hljs-meta">#[derive(Clone, Copy)]</span>
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Number</span></span> {
+    odd: <span class="hljs-built_in">bool</span>,
+    value: <span class="hljs-built_in">i32</span>,
+}
+
+<span class="hljs-comment">// this expands to `impl Clone for Number` and `impl Copy for Number` blocks.</span>
+</code></pre>
+<p>Functions can be generic:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">foobar</span></span>&lt;T&gt;(arg: T) {
+    <span class="hljs-comment">// do something with `arg`</span>
+}
+</code></pre>
+<p>They can have multiple <em>type parameters</em>, which can then be used in the
+function's declaration and its body, instead of concrete types:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">foobar</span></span>&lt;L, R&gt;(left: L, right: R) {
+    <span class="hljs-comment">// do something with `left` and `right`</span>
+}
+</code></pre>
+<p>Type parameters usually have <em>constraints</em>, so you can actually
+do something with them.</p>
+<p>The simplest constraints are just trait names:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">print</span></span>&lt;T: Display&gt;(value: T) {
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"value = {}"</span>, value);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">print</span></span>&lt;T: <span class="hljs-built_in">Debug</span>&gt;(value: T) {
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"value = {:?}"</span>, value);
+}
+</code></pre>
+<p>There's a longer syntax for type parameter constraints:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">print</span></span>&lt;T&gt;(value: T)
+<span class="hljs-keyword">where</span>
+    T: Display,
+{
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"value = {}"</span>, value);
+}
+</code></pre>
+<p>Constraints can be more complicated: they can require a type parameter
+to implement multiple traits:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">use</span> std::fmt::<span class="hljs-built_in">Debug</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">compare</span></span>&lt;T&gt;(left: T, right: T)
+<span class="hljs-keyword">where</span>
+    T: <span class="hljs-built_in">Debug</span> + <span class="hljs-built_in">PartialEq</span>,
+{
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{:?} {} {:?}"</span>, left, <span class="hljs-keyword">if</span> left == right { <span class="hljs-string">"=="</span> } <span class="hljs-keyword">else</span> { <span class="hljs-string">"!="</span> }, right);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    compare(<span class="hljs-string">"tea"</span>, <span class="hljs-string">"coffee"</span>);
+    <span class="hljs-comment">// prints: "tea" != "coffee"</span>
+}
+</code></pre>
+<p>Generic functions can be thought of as namespaces, containing an infinity
+of functions with different concrete types.</p>
+<p>Same as with crates, and modules, and types, generic functions can be “explored”
+(navigated?) using <code>::</code></p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">use</span> std::any::type_name;
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{}"</span>, type_name::&lt;<span class="hljs-built_in">i32</span>&gt;()); <span class="hljs-comment">// prints "i32"</span>
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{}"</span>, type_name::&lt;(<span class="hljs-built_in">f64</span>, <span class="hljs-built_in">char</span>)&gt;()); <span class="hljs-comment">// prints "(f64, char)"</span>
+}
+</code></pre>
+<p>This is lovingly called <a href="https://turbo.fish/">turbofish syntax</a>, because
+<code>::&lt;&gt;</code> looks like a fish.</p>
+<p>Structs can be generic too:</p>
+<pre><code class="language-rust hljs"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Pair</span></span>&lt;T&gt; {
+    a: T,
+    b: T,
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">print_type_name</span></span>&lt;T&gt;(_val: &amp;T) {
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{}"</span>, std::any::type_name::&lt;T&gt;());
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> p1 = Pair { a: <span class="hljs-number">3</span>, b: <span class="hljs-number">9</span> };
+    <span class="hljs-keyword">let</span> p2 = Pair { a: <span class="hljs-literal">true</span>, b: <span class="hljs-literal">false</span> };
+    print_type_name(&amp;p1); <span class="hljs-comment">// prints "Pair&lt;i32&gt;"</span>
+    print_type_name(&amp;p2); <span class="hljs-comment">// prints "Pair&lt;bool&gt;"</span>
+}
+</code></pre>
+<p>The standard library type <code>Vec</code> (~ a heap-allocated array), is generic:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> v1 = <span class="hljs-built_in">Vec</span>::new();
+    v1.push(<span class="hljs-number">1</span>);
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> v2 = <span class="hljs-built_in">Vec</span>::new();
+    v2.push(<span class="hljs-literal">false</span>);
+    print_type_name(&amp;v1); <span class="hljs-comment">// prints "Vec&lt;i32&gt;"</span>
+    print_type_name(&amp;v2); <span class="hljs-comment">// prints "Vec&lt;bool&gt;"</span>
+}
+</code></pre>
+<p>Speaking of <code>Vec</code>, it comes with a macro that gives more or less “vec literals”:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> v1 = <span class="hljs-built_in">vec!</span>[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>];
+    <span class="hljs-keyword">let</span> v2 = <span class="hljs-built_in">vec!</span>[<span class="hljs-literal">true</span>, <span class="hljs-literal">false</span>, <span class="hljs-literal">true</span>];
+    print_type_name(&amp;v1); <span class="hljs-comment">// prints "Vec&lt;i32&gt;"</span>
+    print_type_name(&amp;v2); <span class="hljs-comment">// prints "Vec&lt;bool&gt;"</span>
+}
+</code></pre>
+<p>All of <code>name!()</code>, <code>name![]</code> or <code>name!{}</code> invoke a macro. Macros just expand to
+regular code.</p>
+<p>In fact, <code>println</code> is a macro:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{}"</span>, <span class="hljs-string">"Hello there!"</span>);
+}
+</code></pre>
+<p>This expands to something that has the same effect as:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">use</span> std::io::{<span class="hljs-keyword">self</span>, Write};
+    io::stdout().lock().write_all(<span class="hljs-string">b"Hello there!\n"</span>).unwrap();
+}
+</code></pre>
+<p><code>panic</code> is also a macro. It violently stops execution with an error
+message, and the file name / line number of the error, if enabled:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-built_in">panic!</span>(<span class="hljs-string">"This panics"</span>);
+}
+<span class="hljs-comment">// output: thread 'main' panicked at 'This panics', src/main.rs:3:5</span>
+</code></pre>
+<p>Some methods also panic. For example, the <code>Option</code> type can contain something,
+or it can contain nothing. If <code>.unwrap()</code> is called on it, and it contains
+nothing, it panics:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> o1: <span class="hljs-built_in">Option</span>&lt;<span class="hljs-built_in">i32</span>&gt; = <span class="hljs-literal">Some</span>(<span class="hljs-number">128</span>);
+    o1.unwrap(); <span class="hljs-comment">// this is fine</span>
+
+    <span class="hljs-keyword">let</span> o2: <span class="hljs-built_in">Option</span>&lt;<span class="hljs-built_in">i32</span>&gt; = <span class="hljs-literal">None</span>;
+    o2.unwrap(); <span class="hljs-comment">// this panics!</span>
+}
+
+<span class="hljs-comment">// output: thread 'main' panicked at 'called `Option::unwrap()` on a `None` value', src/libcore/option.rs:378:21</span>
+</code></pre>
+<p><code>Option</code> is not a struct - it's an <code>enum</code>, with two variants.</p>
+<pre><code class="language-rust hljs"><span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">Option</span></span>&lt;T&gt; {
+    <span class="hljs-literal">None</span>,
+    <span class="hljs-literal">Some</span>(T),
+}
+
+<span class="hljs-keyword">impl</span>&lt;T&gt; <span class="hljs-built_in">Option</span>&lt;T&gt; {
+    <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">unwrap</span></span>(<span class="hljs-keyword">self</span>) -&gt; T {
+        <span class="hljs-comment">// enums variants can be used in patterns:</span>
+        <span class="hljs-keyword">match</span> <span class="hljs-keyword">self</span> {
+            Self::<span class="hljs-literal">Some</span>(t) =&gt; t,
+            Self::<span class="hljs-literal">None</span> =&gt; <span class="hljs-built_in">panic!</span>(<span class="hljs-string">".unwrap() called on a None option"</span>),
+        }
+    }
+}
+
+<span class="hljs-keyword">use</span> self::<span class="hljs-built_in">Option</span>::{<span class="hljs-literal">None</span>, <span class="hljs-literal">Some</span>};
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> o1: <span class="hljs-built_in">Option</span>&lt;<span class="hljs-built_in">i32</span>&gt; = <span class="hljs-literal">Some</span>(<span class="hljs-number">128</span>);
+    o1.unwrap(); <span class="hljs-comment">// this is fine</span>
+
+    <span class="hljs-keyword">let</span> o2: <span class="hljs-built_in">Option</span>&lt;<span class="hljs-built_in">i32</span>&gt; = <span class="hljs-literal">None</span>;
+    o2.unwrap(); <span class="hljs-comment">// this panics!</span>
+}
+
+<span class="hljs-comment">// output: thread 'main' panicked at '.unwrap() called on a None option', src/main.rs:11:27</span>
+</code></pre>
+<p><code>Result</code> is also an enum, it can either contain something, or an error:</p>
+<pre><code class="language-rust hljs"><span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">Result</span></span>&lt;T, E&gt; {
+    <span class="hljs-literal">Ok</span>(T),
+    <span class="hljs-literal">Err</span>(E),
+}
+</code></pre>
+<p>It also panics when unwrapped and containing an error.</p>
+<p>Variables bindings have a “lifetime”:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-comment">// `x` doesn't exist yet</span>
+    {
+        <span class="hljs-keyword">let</span> x = <span class="hljs-number">42</span>; <span class="hljs-comment">// `x` starts existing</span>
+        <span class="hljs-built_in">println!</span>(<span class="hljs-string">"x = {}"</span>, x);
+        <span class="hljs-comment">// `x` stops existing</span>
+    }
+    <span class="hljs-comment">// `x` no longer exists</span>
+}
+</code></pre>
+<p>Similarly, references have a lifetime:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-comment">// `x` doesn't exist yet</span>
+    {
+        <span class="hljs-keyword">let</span> x = <span class="hljs-number">42</span>; <span class="hljs-comment">// `x` starts existing</span>
+        <span class="hljs-keyword">let</span> x_ref = &amp;x; <span class="hljs-comment">// `x_ref` starts existing - it borrows `x`</span>
+        <span class="hljs-built_in">println!</span>(<span class="hljs-string">"x_ref = {}"</span>, x_ref);
+        <span class="hljs-comment">// `x_ref` stops existing</span>
+        <span class="hljs-comment">// `x` stops existing</span>
+    }
+    <span class="hljs-comment">// `x` no longer exists</span>
+}
+</code></pre>
+<p>The lifetime of a reference cannot exceed the lifetime of the variable
+binding it borrows:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> x_ref = {
+        <span class="hljs-keyword">let</span> x = <span class="hljs-number">42</span>;
+        &amp;x
+    };
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"x_ref = {}"</span>, x_ref);
+    <span class="hljs-comment">// error: `x` does not live long enough</span>
+}
+</code></pre>
+<p>A variable binding can be immutably borrowed multiple times:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> x = <span class="hljs-number">42</span>;
+    <span class="hljs-keyword">let</span> x_ref1 = &amp;x;
+    <span class="hljs-keyword">let</span> x_ref2 = &amp;x;
+    <span class="hljs-keyword">let</span> x_ref3 = &amp;x;
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{} {} {}"</span>, x_ref1, x_ref2, x_ref3);
+}
+</code></pre>
+<p>While borrowed, a variable binding cannot be mutated:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> x = <span class="hljs-number">42</span>;
+    <span class="hljs-keyword">let</span> x_ref = &amp;x;
+    x = <span class="hljs-number">13</span>;
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"x_ref = {}"</span>, x_ref);
+    <span class="hljs-comment">// error: cannot assign to `x` because it is borrowed</span>
+}
+</code></pre>
+<p>While immutably borrowed, a variable cannot be <em>mutably borrowed</em>:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> x = <span class="hljs-number">42</span>;
+    <span class="hljs-keyword">let</span> x_ref1 = &amp;x;
+    <span class="hljs-keyword">let</span> x_ref2 = &amp;<span class="hljs-keyword">mut</span> x;
+    <span class="hljs-comment">// error: cannot borrow `x` as mutable because it is also borrowed as immutable</span>
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"x_ref1 = {}"</span>, x_ref1);
+}
+</code></pre>
+<p>References in function arguments also have lifetimes:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">print</span></span>(x: &amp;<span class="hljs-built_in">i32</span>) {
+    <span class="hljs-comment">// `x` is borrowed (from the outside) for the</span>
+    <span class="hljs-comment">// entire time this function is called.</span>
+}
+</code></pre>
+<p>Functions with reference arguments can be called with borrows
+that have different lifetimes, so:</p>
+<ul>
+<li>All functions that take references are generic</li>
+<li>Lifetimes are generic parameters</li>
+</ul>
+<p>Lifetimes’ names start with a single quote, <code>'</code>:</p>
+<pre><code class="language-rust hljs"><span class="hljs-comment">// elided (non-named) lifetimes:</span>
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">print</span></span>(x: &amp;<span class="hljs-built_in">i32</span>) {}
+
+<span class="hljs-comment">// named lifetimes:</span>
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">print</span></span>&lt;<span class="hljs-symbol">'a</span>&gt;(x: &amp;<span class="hljs-symbol">'a</span> <span class="hljs-built_in">i32</span>) {}
+</code></pre>
+<p>This allows returning references whose lifetime depend on the
+lifetime of the arguments:</p>
+<pre><code class="language-rust hljs"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Number</span></span> {
+    value: <span class="hljs-built_in">i32</span>,
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">number_value</span></span>&lt;<span class="hljs-symbol">'a</span>&gt;(num: &amp;<span class="hljs-symbol">'a</span> Number) -&gt; &amp;<span class="hljs-symbol">'a</span> <span class="hljs-built_in">i32</span> {
+    &amp;num.value
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> n = Number { value: <span class="hljs-number">47</span> };
+    <span class="hljs-keyword">let</span> v = number_value(&amp;n);
+    <span class="hljs-comment">// `v` borrows `n` (immutably), thus: `v` cannot outlive `n`.</span>
+    <span class="hljs-comment">// While `v` exists, `n` cannot be mutably borrowed, mutated, moved, etc.</span>
+}
+</code></pre>
+<p>When there is a <em>single</em> input lifetime, it doesn't need to be named,
+and everything has the same lifetime, so the two functions below are
+equivalent:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">number_value</span></span>&lt;<span class="hljs-symbol">'a</span>&gt;(num: &amp;<span class="hljs-symbol">'a</span> Number) -&gt; &amp;<span class="hljs-symbol">'a</span> <span class="hljs-built_in">i32</span> {
+    &amp;num.value
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">number_value</span></span>(num: &amp;Number) -&gt; &amp;<span class="hljs-built_in">i32</span> {
+    &amp;num.value
+}
+</code></pre>
+<p>Structs can also be <em>generic over lifetimes</em>, which allows them to
+hold references:</p>
+<pre><code class="language-rust hljs"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">NumRef</span></span>&lt;<span class="hljs-symbol">'a</span>&gt; {
+    x: &amp;<span class="hljs-symbol">'a</span> <span class="hljs-built_in">i32</span>,
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> x: <span class="hljs-built_in">i32</span> = <span class="hljs-number">99</span>;
+    <span class="hljs-keyword">let</span> x_ref = NumRef { x: &amp;x };
+    <span class="hljs-comment">// `x_ref` cannot outlive `x`, etc.</span>
+}
+</code></pre>
+<p>The same code, but with an additional function:</p>
+<pre><code class="language-rust hljs"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">NumRef</span></span>&lt;<span class="hljs-symbol">'a</span>&gt; {
+    x: &amp;<span class="hljs-symbol">'a</span> <span class="hljs-built_in">i32</span>,
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">as_num_ref</span></span>&lt;<span class="hljs-symbol">'a</span>&gt;(x: &amp;<span class="hljs-symbol">'a</span> <span class="hljs-built_in">i32</span>) -&gt; NumRef&lt;<span class="hljs-symbol">'a</span>&gt; {
+    NumRef { x: &amp;x }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> x: <span class="hljs-built_in">i32</span> = <span class="hljs-number">99</span>;
+    <span class="hljs-keyword">let</span> x_ref = as_num_ref(&amp;x);
+    <span class="hljs-comment">// `x_ref` cannot outlive `x`, etc.</span>
+}
+</code></pre>
+<p>The same code, but with “elided” lifetimes:</p>
+<pre><code class="language-rust hljs"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">NumRef</span></span>&lt;<span class="hljs-symbol">'a</span>&gt; {
+    x: &amp;<span class="hljs-symbol">'a</span> <span class="hljs-built_in">i32</span>,
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">as_num_ref</span></span>(x: &amp;<span class="hljs-built_in">i32</span>) -&gt; NumRef&lt;<span class="hljs-symbol">'_</span>&gt; {
+    NumRef { x: &amp;x }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> x: <span class="hljs-built_in">i32</span> = <span class="hljs-number">99</span>;
+    <span class="hljs-keyword">let</span> x_ref = as_num_ref(&amp;x);
+    <span class="hljs-comment">// `x_ref` cannot outlive `x`, etc.</span>
+}
+</code></pre>
+<p><code>impl</code> blocks can be generic over lifetimes too:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">impl</span>&lt;<span class="hljs-symbol">'a</span>&gt; NumRef&lt;<span class="hljs-symbol">'a</span>&gt; {
+    <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">as_i32_ref</span></span>(&amp;<span class="hljs-symbol">'a</span> <span class="hljs-keyword">self</span>) -&gt; &amp;<span class="hljs-symbol">'a</span> <span class="hljs-built_in">i32</span> {
+        <span class="hljs-keyword">self</span>.x
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> x: <span class="hljs-built_in">i32</span> = <span class="hljs-number">99</span>;
+    <span class="hljs-keyword">let</span> x_num_ref = NumRef { x: &amp;x };
+    <span class="hljs-keyword">let</span> x_i32_ref = x_num_ref.as_i32_ref();
+    <span class="hljs-comment">// neither ref cannot outlive `x`</span>
+}
+</code></pre>
+<p>But you can do elision (“to elide”) there too:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">impl</span>&lt;<span class="hljs-symbol">'a</span>&gt; NumRef&lt;<span class="hljs-symbol">'a</span>&gt; {
+    <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">as_i32_ref</span></span>(&amp;<span class="hljs-keyword">self</span>) -&gt; &amp;<span class="hljs-built_in">i32</span> {
+        <span class="hljs-keyword">self</span>.x
+    }
+}
+</code></pre>
+<p>You can elide even harder, if you never need the name:</p>
+<pre><code class="language-rust hljs"><span class="hljs-keyword">impl</span> NumRef&lt;<span class="hljs-symbol">'_</span>&gt; {
+    <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">as_i32_ref</span></span>(&amp;<span class="hljs-keyword">self</span>) -&gt; &amp;<span class="hljs-built_in">i32</span> {
+        <span class="hljs-keyword">self</span>.x
+    }
+}
+</code></pre>
+<p>There is a special lifetime, named <code>'static</code>, which is valid for the
+entire program's lifetime.</p>
+<p>String literals are <code>'static'</code>:</p>
+<pre><code class="language-rust hljs"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Person</span></span> {
+    name: &amp;<span class="hljs-symbol">'static</span> <span class="hljs-built_in">str</span>,
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> p = Person {
+        name: <span class="hljs-string">"fasterthanlime"</span>,
+    };
+}
+</code></pre>
+<p>But <em>owned strings</em> are not static:</p>
+<pre><code class="language-rust hljs"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Person</span></span> {
+    name: &amp;<span class="hljs-symbol">'static</span> <span class="hljs-built_in">str</span>,
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> name = <span class="hljs-built_in">format!</span>(<span class="hljs-string">"fasterthan{}"</span>, <span class="hljs-string">"lime"</span>);
+    <span class="hljs-keyword">let</span> p = Person { name: &amp;name };
+    <span class="hljs-comment">// error: `name` does not live long enough</span>
+}
+</code></pre>
+<p>In that last example, the local <code>name</code> is not a <code>&amp;'static str</code>, it's a
+<code>String</code>. It's been allocated dynamically, and it will be freed. Its lifetime
+is <em>less</em> than the whole program (even though it happens to be in <code>main</code>).</p>
+<p>To store a non-<code>'static</code> string in <code>Person</code>, it needs to either:</p>
+<p>A) Be generic over a lifetime:</p>
+<pre><code class="language-rust hljs"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Person</span></span>&lt;<span class="hljs-symbol">'a</span>&gt; {
+    name: &amp;<span class="hljs-symbol">'a</span> <span class="hljs-built_in">str</span>,
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> name = <span class="hljs-built_in">format!</span>(<span class="hljs-string">"fasterthan{}"</span>, <span class="hljs-string">"lime"</span>);
+    <span class="hljs-keyword">let</span> p = Person { name: &amp;name };
+    <span class="hljs-comment">// `p` cannot outlive `name`</span>
+}
+</code></pre>
+<p>or</p>
+<p>B) Take ownership of the string</p>
+<pre><code class="language-rust hljs"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Person</span></span> {
+    name: <span class="hljs-built_in">String</span>,
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> name = <span class="hljs-built_in">format!</span>(<span class="hljs-string">"fasterthan{}"</span>, <span class="hljs-string">"lime"</span>);
+    <span class="hljs-keyword">let</span> p = Person { name: name };
+    <span class="hljs-comment">// `name` was moved into `p`, their lifetimes are no longer tied.</span>
+}
+</code></pre>
+<p>Speaking of: in a struct literal, when a field is set to a variable binding of the
+same name:</p>
+<pre><code class="language-rust hljs">    <span class="hljs-keyword">let</span> p = Person { name: name };
+</code></pre>
+<p>It can be shortened like this:</p>
+<pre><code class="language-rust hljs">    <span class="hljs-keyword">let</span> p = Person { name };
+</code></pre>
+<p>For many types in Rust, there are owned and non-owned variants:</p>
+<ul>
+<li>Strings: <code>String</code> is owned, <code>&amp;str</code> is a reference</li>
+<li>Paths: <code>PathBuf</code> is owned, <code>&amp;Path</code> is a reference</li>
+<li>Collections: <code>Vec&lt;T&gt;</code> is owned, <code>&amp;[T]</code> is a reference</li>
+</ul>
+<p>Rust has slices - they're a reference to multiple contiguous elements.</p>
+<p>You can borrow a slice of a vector, for example:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> v = <span class="hljs-built_in">vec!</span>[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>];
+    <span class="hljs-keyword">let</span> v2 = &amp;v[<span class="hljs-number">2</span>..<span class="hljs-number">4</span>];
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"v2 = {:?}"</span>, v2);
+}
+
+<span class="hljs-comment">// output:</span>
+<span class="hljs-comment">// v2 = [3, 4]</span>
+</code></pre>
+<p>The above is not magical. The indexing operator (<code>foo[index]</code>) is
+overloaded with the <code>Index</code> and <code>IndexMut</code> traits.</p>
+<p>The <code>..</code> syntax is just range literals. Ranges are just a few
+structs defined in the standard library.</p>
+<p>They can be open-ended, and their rightmost bound can be inclusive,
+if it's preceded by <code>=</code>.</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-comment">// 0 or greater</span>
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{:?}"</span>, (<span class="hljs-number">0</span>..).contains(&amp;<span class="hljs-number">100</span>)); <span class="hljs-comment">// true</span>
+    <span class="hljs-comment">// strictly less than 20</span>
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{:?}"</span>, (..<span class="hljs-number">20</span>).contains(&amp;<span class="hljs-number">20</span>)); <span class="hljs-comment">// false</span>
+    <span class="hljs-comment">// 20 or less than 20</span>
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{:?}"</span>, (..=<span class="hljs-number">20</span>).contains(&amp;<span class="hljs-number">20</span>)); <span class="hljs-comment">// true</span>
+    <span class="hljs-comment">// only 3, 4, 5</span>
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{:?}"</span>, (<span class="hljs-number">3</span>..<span class="hljs-number">6</span>).contains(&amp;<span class="hljs-number">4</span>)); <span class="hljs-comment">// true</span>
+}
+</code></pre>
+<p>Borrowing rules apply to slices.</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">tail</span></span>(s: &amp;[<span class="hljs-built_in">u8</span>]) -&gt; &amp;[<span class="hljs-built_in">u8</span>] {
+  &amp;s[<span class="hljs-number">1</span>..] 
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> x = &amp;[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>];
+    <span class="hljs-keyword">let</span> y = tail(x);
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"y = {:?}"</span>, y);
+}
+</code></pre>
+<p>This is the same as:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">tail</span></span>&lt;<span class="hljs-symbol">'a</span>&gt;(s: &amp;<span class="hljs-symbol">'a</span> [<span class="hljs-built_in">u8</span>]) -&gt; &amp;<span class="hljs-symbol">'a</span> [<span class="hljs-built_in">u8</span>] {
+  &amp;s[<span class="hljs-number">1</span>..] 
+}
+</code></pre>
+<p>This is legal:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> y = {
+        <span class="hljs-keyword">let</span> x = &amp;[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>];
+        tail(x)
+    };
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"y = {:?}"</span>, y);
+}
+</code></pre>
+<p>…but only because <code>[1, 2, 3, 4, 5]</code> is a <code>'static</code> array.</p>
+<p>So, this is illegal:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> y = {
+        <span class="hljs-keyword">let</span> v = <span class="hljs-built_in">vec!</span>[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>];
+        tail(&amp;v)
+        <span class="hljs-comment">// error: `v` does not live long enough</span>
+    };
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"y = {:?}"</span>, y);
+}
+</code></pre>
+<p>…because a vector is heap-allocated, and it has a non-<code>'static</code> lifetime.</p>
+<p><code>&amp;str</code> values are really slices.</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">file_ext</span></span>(name: &amp;<span class="hljs-built_in">str</span>) -&gt; <span class="hljs-built_in">Option</span>&lt;&amp;<span class="hljs-built_in">str</span>&gt; {
+    <span class="hljs-comment">// this does not create a new string - it returns</span>
+    <span class="hljs-comment">// a slice of the argument.</span>
+    name.split(<span class="hljs-string">"."</span>).last()
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> name = <span class="hljs-string">"Read me. Or don't.txt"</span>;
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> <span class="hljs-literal">Some</span>(ext) = file_ext(name) {
+        <span class="hljs-built_in">println!</span>(<span class="hljs-string">"file extension: {}"</span>, ext);
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-built_in">println!</span>(<span class="hljs-string">"no file extension"</span>);
+    }
+}
+</code></pre>
+<p>…so the borrow rules apply here too:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> ext = {
+        <span class="hljs-keyword">let</span> name = <span class="hljs-built_in">String</span>::from(<span class="hljs-string">"Read me. Or don't.txt"</span>);
+        file_ext(&amp;name).unwrap_or(<span class="hljs-string">""</span>)
+        <span class="hljs-comment">// error: `name` does not live long enough</span>
+    };
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"extension: {:?}"</span>, ext);
+}
+</code></pre>
+<p>Functions that can fail typically return a <code>Result</code>:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> s = std::<span class="hljs-built_in">str</span>::from_utf8(&amp;[<span class="hljs-number">240</span>, <span class="hljs-number">159</span>, <span class="hljs-number">141</span>, <span class="hljs-number">137</span>]);
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{:?}"</span>, s);
+    <span class="hljs-comment">// prints: Ok("🍉")</span>
+
+    <span class="hljs-keyword">let</span> s = std::<span class="hljs-built_in">str</span>::from_utf8(&amp;[<span class="hljs-number">195</span>, <span class="hljs-number">40</span>]);
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{:?}"</span>, s);
+    <span class="hljs-comment">// prints: Err(Utf8Error { valid_up_to: 0, error_len: Some(1) })</span>
+}
+</code></pre>
+<p>If you want to panic in case of failure, you can <code>.unwrap()</code>:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> s = std::<span class="hljs-built_in">str</span>::from_utf8(&amp;[<span class="hljs-number">240</span>, <span class="hljs-number">159</span>, <span class="hljs-number">141</span>, <span class="hljs-number">137</span>]).unwrap();
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{:?}"</span>, s);
+    <span class="hljs-comment">// prints: "🍉"</span>
+
+    <span class="hljs-keyword">let</span> s = std::<span class="hljs-built_in">str</span>::from_utf8(&amp;[<span class="hljs-number">195</span>, <span class="hljs-number">40</span>]).unwrap();
+    <span class="hljs-comment">// prints: thread 'main' panicked at 'called `Result::unwrap()`</span>
+    <span class="hljs-comment">// on an `Err` value: Utf8Error { valid_up_to: 0, error_len: Some(1) }',</span>
+    <span class="hljs-comment">// src/libcore/result.rs:1165:5</span>
+}
+</code></pre>
+<p>Or <code>.expect()</code>, for a custom message:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> s = std::<span class="hljs-built_in">str</span>::from_utf8(&amp;[<span class="hljs-number">195</span>, <span class="hljs-number">40</span>]).expect(<span class="hljs-string">"valid utf-8"</span>);
+    <span class="hljs-comment">// prints: thread 'main' panicked at 'valid utf-8: Utf8Error</span>
+    <span class="hljs-comment">// { valid_up_to: 0, error_len: Some(1) }', src/libcore/result.rs:1165:5</span>
+}
+</code></pre>
+<p>Or, you can <code>match</code>:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">match</span> std::<span class="hljs-built_in">str</span>::from_utf8(&amp;[<span class="hljs-number">240</span>, <span class="hljs-number">159</span>, <span class="hljs-number">141</span>, <span class="hljs-number">137</span>]) {
+        <span class="hljs-literal">Ok</span>(s) =&gt; <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{}"</span>, s),
+        <span class="hljs-literal">Err</span>(e) =&gt; <span class="hljs-built_in">panic!</span>(e),
+    }
+    <span class="hljs-comment">// prints 🍉</span>
+}
+</code></pre>
+<p>Or you can <code>if let</code>:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> <span class="hljs-literal">Ok</span>(s) = std::<span class="hljs-built_in">str</span>::from_utf8(&amp;[<span class="hljs-number">240</span>, <span class="hljs-number">159</span>, <span class="hljs-number">141</span>, <span class="hljs-number">137</span>]) {
+        <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{}"</span>, s);
+    }
+    <span class="hljs-comment">// prints 🍉</span>
+}
+</code></pre>
+<p>Or you can bubble up the error:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() -&gt; <span class="hljs-built_in">Result</span>&lt;(), std::<span class="hljs-built_in">str</span>::Utf8Error&gt; {
+    <span class="hljs-keyword">match</span> std::<span class="hljs-built_in">str</span>::from_utf8(&amp;[<span class="hljs-number">240</span>, <span class="hljs-number">159</span>, <span class="hljs-number">141</span>, <span class="hljs-number">137</span>]) {
+        <span class="hljs-literal">Ok</span>(s) =&gt; <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{}"</span>, s),
+        <span class="hljs-literal">Err</span>(e) =&gt; <span class="hljs-keyword">return</span> <span class="hljs-literal">Err</span>(e),
+    }
+    <span class="hljs-literal">Ok</span>(())
+}
+</code></pre>
+<p>Or you can use <code>?</code> to do it the concise way:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() -&gt; <span class="hljs-built_in">Result</span>&lt;(), std::<span class="hljs-built_in">str</span>::Utf8Error&gt; {
+    <span class="hljs-keyword">let</span> s = std::<span class="hljs-built_in">str</span>::from_utf8(&amp;[<span class="hljs-number">240</span>, <span class="hljs-number">159</span>, <span class="hljs-number">141</span>, <span class="hljs-number">137</span>])?;
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{}"</span>, s);
+    <span class="hljs-literal">Ok</span>(())
+}
+</code></pre>
+<p>The <code>*</code> operator can be used to <em>dereference</em>, but you don't need to do
+that to access fields or call methods:</p>
+<pre><code class="language-rust hljs"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Point</span></span> {
+    x: <span class="hljs-built_in">f64</span>,
+    y: <span class="hljs-built_in">f64</span>,
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> p = Point { x: <span class="hljs-number">1.0</span>, y: <span class="hljs-number">3.0</span> };
+    <span class="hljs-keyword">let</span> p_ref = &amp;p;
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"({}, {})"</span>, p_ref.x, p_ref.y);
+}
+
+<span class="hljs-comment">// prints `(1, 3)`</span>
+</code></pre>
+<p>And you can only do it if the type is <code>Copy</code>:</p>
+<pre><code class="language-rust hljs"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Point</span></span> {
+    x: <span class="hljs-built_in">f64</span>,
+    y: <span class="hljs-built_in">f64</span>,
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">negate</span></span>(p: Point) -&gt; Point {
+    Point {
+        x: -p.x,
+        y: -p.y,
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> p = Point { x: <span class="hljs-number">1.0</span>, y: <span class="hljs-number">3.0</span> };
+    <span class="hljs-keyword">let</span> p_ref = &amp;p;
+    negate(*p_ref);
+    <span class="hljs-comment">// error: cannot move out of `*p_ref` which is behind a shared reference</span>
+}
+</code></pre>
+<pre><code class="language-rust hljs"><span class="hljs-comment">// now `Point` is `Copy`</span>
+<span class="hljs-meta">#[derive(Clone, Copy)]</span>
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Point</span></span> {
+    x: <span class="hljs-built_in">f64</span>,
+    y: <span class="hljs-built_in">f64</span>,
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">negate</span></span>(p: Point) -&gt; Point {
+    Point {
+        x: -p.x,
+        y: -p.y,
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> p = Point { x: <span class="hljs-number">1.0</span>, y: <span class="hljs-number">3.0</span> };
+    <span class="hljs-keyword">let</span> p_ref = &amp;p;
+    negate(*p_ref); <span class="hljs-comment">// ...and now this works</span>
+}
+</code></pre>
+<p>Closures are just functions of type <code>Fn</code>, <code>FnMut</code> or <code>FnOnce</code> with some captured context.</p>
+<p>Their parameters are a comma-separated list of names within a pair of pipes
+(<code>|</code>). They don't <em>need</em> curly braces, unless you want to have multiple statement.</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">for_each_planet</span></span>&lt;F&gt;(f: F)
+    <span class="hljs-keyword">where</span> F: <span class="hljs-built_in">Fn</span>(&amp;<span class="hljs-symbol">'static</span> <span class="hljs-built_in">str</span>)
+{
+    f(<span class="hljs-string">"Earth"</span>);
+    f(<span class="hljs-string">"Mars"</span>);
+    f(<span class="hljs-string">"Jupiter"</span>);
+}
+ 
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    for_each_planet(|planet| <span class="hljs-built_in">println!</span>(<span class="hljs-string">"Hello, {}"</span>, planet));
+}
+
+<span class="hljs-comment">// prints:</span>
+<span class="hljs-comment">// Hello, Earth</span>
+<span class="hljs-comment">// Hello, Mars</span>
+<span class="hljs-comment">// Hello, Jupiter</span>
+</code></pre>
+<p>The borrow rules apply to them too:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">for_each_planet</span></span>&lt;F&gt;(f: F)
+    <span class="hljs-keyword">where</span> F: <span class="hljs-built_in">Fn</span>(&amp;<span class="hljs-symbol">'static</span> <span class="hljs-built_in">str</span>)
+{
+    f(<span class="hljs-string">"Earth"</span>);
+    f(<span class="hljs-string">"Mars"</span>);
+    f(<span class="hljs-string">"Jupiter"</span>);
+}
+ 
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> greeting = <span class="hljs-built_in">String</span>::from(<span class="hljs-string">"Good to see you"</span>);
+    for_each_planet(|planet| <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{}, {}"</span>, greeting, planet));
+    <span class="hljs-comment">// our closure borrows `greeting`, so it cannot outlive it</span>
+}
+</code></pre>
+<p>For example, this would not work:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">for_each_planet</span></span>&lt;F&gt;(f: F)
+    <span class="hljs-keyword">where</span> F: <span class="hljs-built_in">Fn</span>(&amp;<span class="hljs-symbol">'static</span> <span class="hljs-built_in">str</span>) + <span class="hljs-symbol">'static</span> <span class="hljs-comment">// `F` must now have "'static" lifetime</span>
+{
+    f(<span class="hljs-string">"Earth"</span>);
+    f(<span class="hljs-string">"Mars"</span>);
+    f(<span class="hljs-string">"Jupiter"</span>);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> greeting = <span class="hljs-built_in">String</span>::from(<span class="hljs-string">"Good to see you"</span>);
+    for_each_planet(|planet| <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{}, {}"</span>, greeting, planet));
+    <span class="hljs-comment">// error: closure may outlive the current function, but it borrows</span>
+    <span class="hljs-comment">// `greeting`, which is owned by the current function</span>
+}
+</code></pre>
+<p>But this would:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> greeting = <span class="hljs-built_in">String</span>::from(<span class="hljs-string">"You're doing great"</span>);
+    for_each_planet(<span class="hljs-keyword">move</span> |planet| <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{}, {}"</span>, greeting, planet));
+    <span class="hljs-comment">// `greeting` is no longer borrowed, it is *moved* into</span>
+    <span class="hljs-comment">// the closure.</span>
+}
+</code></pre>
+<p>An <code>FnMut</code> needs to be mutably borrowed to be called, so it can
+only be called once at a time.</p>
+<p>This is legal:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">foobar</span></span>&lt;F&gt;(f: F)
+    <span class="hljs-keyword">where</span> F: <span class="hljs-built_in">Fn</span>(<span class="hljs-built_in">i32</span>) -&gt; <span class="hljs-built_in">i32</span>
+{
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{}"</span>, f(f(<span class="hljs-number">2</span>))); 
+}
+ 
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    foobar(|x| x * <span class="hljs-number">2</span>);
+}
+
+<span class="hljs-comment">// output: 8</span>
+</code></pre>
+<p>This isn't:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">foobar</span></span>&lt;F&gt;(<span class="hljs-keyword">mut</span> f: F)
+    <span class="hljs-keyword">where</span> F: <span class="hljs-built_in">FnMut</span>(<span class="hljs-built_in">i32</span>) -&gt; <span class="hljs-built_in">i32</span>
+{
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{}"</span>, f(f(<span class="hljs-number">2</span>))); 
+    <span class="hljs-comment">// error: cannot borrow `f` as mutable more than once at a time</span>
+}
+ 
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    foobar(|x| x * <span class="hljs-number">2</span>);
+}
+</code></pre>
+<p>This is legal again:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">foobar</span></span>&lt;F&gt;(<span class="hljs-keyword">mut</span> f: F)
+    <span class="hljs-keyword">where</span> F: <span class="hljs-built_in">FnMut</span>(<span class="hljs-built_in">i32</span>) -&gt; <span class="hljs-built_in">i32</span>
+{
+    <span class="hljs-keyword">let</span> tmp = f(<span class="hljs-number">2</span>);
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{}"</span>, f(tmp)); 
+}
+ 
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    foobar(|x| x * <span class="hljs-number">2</span>);
+}
+
+<span class="hljs-comment">// output: 8</span>
+</code></pre>
+<p><code>FnMut</code> exists because some closures <em>mutably borrow</em> local variables:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">foobar</span></span>&lt;F&gt;(<span class="hljs-keyword">mut</span> f: F)
+    <span class="hljs-keyword">where</span> F: <span class="hljs-built_in">FnMut</span>(<span class="hljs-built_in">i32</span>) -&gt; <span class="hljs-built_in">i32</span>
+{
+    <span class="hljs-keyword">let</span> tmp = f(<span class="hljs-number">2</span>);
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{}"</span>, f(tmp)); 
+}
+ 
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> acc = <span class="hljs-number">2</span>;
+    foobar(|x| {
+        acc += <span class="hljs-number">1</span>;
+        x * acc
+    });
+}
+
+<span class="hljs-comment">// output: 24</span>
+</code></pre>
+<p>Those closures cannot be passed to functions expecting <code>Fn</code>:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">foobar</span></span>&lt;F&gt;(f: F)
+    <span class="hljs-keyword">where</span> F: <span class="hljs-built_in">Fn</span>(<span class="hljs-built_in">i32</span>) -&gt; <span class="hljs-built_in">i32</span>
+{
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{}"</span>, f(f(<span class="hljs-number">2</span>))); 
+}
+ 
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> acc = <span class="hljs-number">2</span>;
+    foobar(|x| {
+        acc += <span class="hljs-number">1</span>;
+        <span class="hljs-comment">// error: cannot assign to `acc`, as it is a</span>
+        <span class="hljs-comment">// captured variable in a `Fn` closure.</span>
+        <span class="hljs-comment">// the compiler suggests "changing foobar</span>
+        <span class="hljs-comment">// to accept closures that implement `FnMut`"</span>
+        x * acc
+    });
+}
+</code></pre>
+<p><code>FnOnce</code> closures can only be called once. They exist because some closure
+move out variables that have been moved when captured:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">foobar</span></span>&lt;F&gt;(f: F)
+    <span class="hljs-keyword">where</span> F: <span class="hljs-built_in">FnOnce</span>() -&gt; <span class="hljs-built_in">String</span>
+{
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{}"</span>, f()); 
+}
+ 
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> s = <span class="hljs-built_in">String</span>::from(<span class="hljs-string">"alright"</span>);
+    foobar(<span class="hljs-keyword">move</span> || s);
+    <span class="hljs-comment">// `s` was moved into our closure, and our</span>
+    <span class="hljs-comment">// closures moves it to the caller by returning</span>
+    <span class="hljs-comment">// it. Remember that `String` is not `Copy`.</span>
+}
+</code></pre>
+<p>This is enforced naturally, as <code>FnOnce</code> closures need to be <em>moved</em>
+in order to be called.</p>
+<p>So, for example, this is illegal:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">foobar</span></span>&lt;F&gt;(f: F)
+    <span class="hljs-keyword">where</span> F: <span class="hljs-built_in">FnOnce</span>() -&gt; <span class="hljs-built_in">String</span>
+{
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{}"</span>, f()); 
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{}"</span>, f()); 
+    <span class="hljs-comment">// error: use of moved value: `f`</span>
+}
+</code></pre>
+<p>And, if you need convincing that our closure <em>does</em> move <code>s</code>,
+this is illegal too:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> s = <span class="hljs-built_in">String</span>::from(<span class="hljs-string">"alright"</span>);
+    foobar(<span class="hljs-keyword">move</span> || s);
+    foobar(<span class="hljs-keyword">move</span> || s);
+    <span class="hljs-comment">// use of moved value: `s`</span>
+}
+</code></pre>
+<p>But this is fine:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> s = <span class="hljs-built_in">String</span>::from(<span class="hljs-string">"alright"</span>);
+    foobar(|| s.clone());
+    foobar(|| s.clone());
+}
+</code></pre>
+<p>Here's a closure with two arguments:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">foobar</span></span>&lt;F&gt;(x: <span class="hljs-built_in">i32</span>, y: <span class="hljs-built_in">i32</span>, is_greater: F)
+    <span class="hljs-keyword">where</span> F: <span class="hljs-built_in">Fn</span>(<span class="hljs-built_in">i32</span>, <span class="hljs-built_in">i32</span>) -&gt; <span class="hljs-built_in">bool</span>
+{
+    <span class="hljs-keyword">let</span> (greater, smaller) = <span class="hljs-keyword">if</span> is_greater(x, y) {
+        (x, y)
+    } <span class="hljs-keyword">else</span> {
+        (y, x)
+    };
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{} is greater than {}"</span>, greater, smaller);
+}
+ 
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    foobar(<span class="hljs-number">32</span>, <span class="hljs-number">64</span>, |x, y| x &gt; y);
+}
+</code></pre>
+<p>Here's a closure ignoring both its arguments:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    foobar(<span class="hljs-number">32</span>, <span class="hljs-number">64</span>, |_, _| <span class="hljs-built_in">panic!</span>(<span class="hljs-string">"Comparing is futile!"</span>));
+}
+</code></pre>
+<p>Here's a slightly worrying closure:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">countdown</span></span>&lt;F&gt;(count: <span class="hljs-built_in">usize</span>, tick: F)
+    <span class="hljs-keyword">where</span> F: <span class="hljs-built_in">Fn</span>(<span class="hljs-built_in">usize</span>)
+{
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> (<span class="hljs-number">1</span>..=count).rev() {
+        tick(i);
+    }
+}
+ 
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    countdown(<span class="hljs-number">3</span>, |i| <span class="hljs-built_in">println!</span>(<span class="hljs-string">"tick {}..."</span>, i));
+}
+
+<span class="hljs-comment">// output:</span>
+<span class="hljs-comment">// tick 3...</span>
+<span class="hljs-comment">// tick 2...</span>
+<span class="hljs-comment">// tick 1...</span>
+</code></pre>
+<p>And here's a toilet closure:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    countdown(<span class="hljs-number">3</span>, |_| ());
+}
+</code></pre>
+<p>Called thusly because <code>|_| ()</code> looks like a toilet.</p>
+<p>Anything that is iterable can be used in a <code>for in</code> loop.</p>
+<p>We've just seen a range being used, but it also works with a <code>Vec</code>:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">vec!</span>[<span class="hljs-number">52</span>, <span class="hljs-number">49</span>, <span class="hljs-number">21</span>] {
+        <span class="hljs-built_in">println!</span>(<span class="hljs-string">"I like the number {}"</span>, i);
+    }
+}
+</code></pre>
+<p>Or a slice:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> &amp;[<span class="hljs-number">52</span>, <span class="hljs-number">49</span>, <span class="hljs-number">21</span>] {
+        <span class="hljs-built_in">println!</span>(<span class="hljs-string">"I like the number {}"</span>, i);
+    }
+}
+
+<span class="hljs-comment">// output:</span>
+<span class="hljs-comment">// I like the number 52</span>
+<span class="hljs-comment">// I like the number 49</span>
+<span class="hljs-comment">// I like the number 21</span>
+</code></pre>
+<p>Or an actual iterator:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-comment">// note: `&amp;str` also has a `.bytes()` iterator.</span>
+    <span class="hljs-comment">// Rust's `char` type is a "Unicode scalar value"</span>
+    <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> <span class="hljs-string">"rust"</span>.chars() {
+        <span class="hljs-built_in">println!</span>(<span class="hljs-string">"Give me a {}"</span>, c);
+    }
+}
+
+<span class="hljs-comment">// output:</span>
+<span class="hljs-comment">// Give me a r</span>
+<span class="hljs-comment">// Give me a u</span>
+<span class="hljs-comment">// Give me a s</span>
+<span class="hljs-comment">// Give me a t</span>
+</code></pre>
+<p>Even if the iterator items are filtered and mapped and flattened:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> <span class="hljs-string">"sHE'S brOKen"</span>
+        .chars()
+        .filter(|c| c.is_uppercase() || !c.is_ascii_alphabetic())
+        .flat_map(|c| c.to_lowercase())
+    {
+        <span class="hljs-built_in">print!</span>(<span class="hljs-string">"{}"</span>, c);
+    }
+    <span class="hljs-built_in">println!</span>();
+}
+
+<span class="hljs-comment">// output: he's ok</span>
+</code></pre>
+<p>You can return a closure from a function:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">make_tester</span></span>(answer: <span class="hljs-built_in">String</span>) -&gt; <span class="hljs-keyword">impl</span> <span class="hljs-built_in">Fn</span>(&amp;<span class="hljs-built_in">str</span>) -&gt; <span class="hljs-built_in">bool</span> {
+    <span class="hljs-keyword">move</span> |challenge| {
+        challenge == answer
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-comment">// you can use `.into()` to perform conversions</span>
+    <span class="hljs-comment">// between various types, here `&amp;'static str` and `String`</span>
+    <span class="hljs-keyword">let</span> test = make_tester(<span class="hljs-string">"hunter2"</span>.into());
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{}"</span>, test(<span class="hljs-string">"******"</span>));
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{}"</span>, test(<span class="hljs-string">"hunter2"</span>));
+}
+</code></pre>
+<p>You can even move a reference to some of a function's arguments,
+into a closure it returns:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">make_tester</span></span>&lt;<span class="hljs-symbol">'a</span>&gt;(answer: &amp;<span class="hljs-symbol">'a</span> <span class="hljs-built_in">str</span>) -&gt; <span class="hljs-keyword">impl</span> <span class="hljs-built_in">Fn</span>(&amp;<span class="hljs-built_in">str</span>) -&gt; <span class="hljs-built_in">bool</span> + <span class="hljs-symbol">'a</span> {
+    <span class="hljs-keyword">move</span> |challenge| {
+        challenge == answer
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+    <span class="hljs-keyword">let</span> test = make_tester(<span class="hljs-string">"hunter2"</span>);
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{}"</span>, test(<span class="hljs-string">"*******"</span>));
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{}"</span>, test(<span class="hljs-string">"hunter2"</span>));
+}
+
+<span class="hljs-comment">// output:</span>
+<span class="hljs-comment">// false</span>
+<span class="hljs-comment">// true</span>
+</code></pre>
+<p>Or, with elided lifetimes:</p>
+<pre><code class="language-rust hljs"><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">make_tester</span></span>(answer: &amp;<span class="hljs-built_in">str</span>) -&gt; <span class="hljs-keyword">impl</span> <span class="hljs-built_in">Fn</span>(&amp;<span class="hljs-built_in">str</span>) -&gt; <span class="hljs-built_in">bool</span> + <span class="hljs-symbol">'_</span> {
+    <span class="hljs-keyword">move</span> |challenge| {
+        challenge == answer
+    }
+}
+</code></pre>
+<p>And with that, we hit the 30-minute estimated reading time mark, and you
+should be able to read <em>most</em> of the Rust code you find online.</p>
+<p>Writing Rust is a very different experience from reading Rust. On one hand,
+you're not reading the <em>solution</em> to a problem, you're actually solving it.
+On the other hand, the Rust compiler helps out a <em>lot</em>.</p>
+<p>For all of the intentional mistakes made above (“this code is illegal”, etc.),
+rustc always has very good error messages <em>and</em> insightful suggestions.</p>
+<p>And when there's a hint missing, the compiler team is <a href="https://mobile.twitter.com/fasterthanlime/status/1219601989404954624">not afraid to add it</a>.</p>
+<p>For more Rust material, you may want to check out:</p>
+<ul>
+<li><a href="https://doc.rust-lang.org/book/">The Rust Book</a></li>
+<li><a href="https://doc.rust-lang.org/stable/rust-by-example/">Rust By Example</a></li>
+<li><a href="https://readrust.net/">Read Rust</a></li>
+<li><a href="https://this-week-in-rust.org/">This Week In Rust</a></li>
+</ul>
+<p>I also <a href="https://fasterthanli.me/tags/rust/">blog about Rust</a> and <a href="https://twitter.com/fasterthanlime">tweet about
+Rust</a> a lot, so if you liked this
+article, you know what to do.</p>
+<p>Have fun!</p>
+
+
+          
+
+
+
+          
+          
+<p class="patreon_credits">This article was made possible thanks to my patrons: Aurora, Chad Morrow, Fernando, Geert Depuydt, Geoff Cant, Geoffroy Couprie,
+Ignacio Vergara, Jane Lusby, Jesús Higueras, Jérémy Gtld, Makoto Nakashima,
+Michael Alyn Miller, Nicolas Goy, o0Ignition0o, Pascal, Raphael Gaschignard,
+Romain Ruetschi, Ryszard Sommefeldt, Sebastian Zimmer, Someone, Stefano
+Probst, Ted Mielczarek, Xananax, Zaki, and Тим Маринин.</p>
+          
+        </div>
+        
+<div class="patreon_plug">
+    <p>If you liked this article, please support my work on Patreon!</p>
+
+    <p>
+
+<a class="button" href="https://www.patreon.com/bePatron?u=47556">
+    <img src="amos%20-%20A%20half-hour%20to%20learn%20Rust_files/mark-white.png"> Become a Patron
+</a>
+
+
+</p>
+</div>
+
+
+        
+
+        
+        
+        <br>
+
+        <div class="navigation">
+          
+          <div>
+            <img class="icon" src="amos%20-%20A%20half-hour%20to%20learn%20Rust_files/back.svg" alt="back">
+            <a href="https://fasterthanli.me/blog/2020/loading-multiple-elf-objects/">Loading multiple ELF objects</a>
+          </div>
+          
+          <div style="width: 100%;"></div>
+          
+          <div>
+            <a href="https://fasterthanli.me/blog/2020/dynamic-symbol-resolution/">Dynamic symbol resolution</a>
+            <img class="icon" src="amos%20-%20A%20half-hour%20to%20learn%20Rust_files/next.svg" alt="next">
+          </div>
+          
+        </div>
+        
+        
+
+        
+        
+
+        
+
+        
+      </div>
+    </div>
+  </div>
+
+
+<div class="footer column">
+    <div class="container">
+
+        
+
+        <div class="icons">
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+            <a href="https://github.com/fasterthanlime" rel="me" target="_blank">
+                <img class="icon" src="amos%20-%20A%20half-hour%20to%20learn%20Rust_files/github.svg" alt="github">
+            </a>
+        
+
+        
+            <a href="https://twitter.com/fasterthanlime" rel="me" target="_blank">
+                <img class="icon" src="amos%20-%20A%20half-hour%20to%20learn%20Rust_files/twitter.svg" alt="twitter">
+            </a>
+        
+
+        
+
+        
+
+        
+
+        
+            <a href="https://fasterthanli.me/index.xml">
+                <img class="icon" src="amos%20-%20A%20half-hour%20to%20learn%20Rust_files/rss.svg" alt="rss">
+            </a>
+        
+
+        </div>
+    </div>
+</div>
+
+
+<script async="" src="amos%20-%20A%20half-hour%20to%20learn%20Rust_files/tracker.js" id="fathom-script"></script><script src="amos%20-%20A%20half-hour%20to%20learn%20Rust_files/highlight.js" defer="defer"></script>
+
+<script src="amos%20-%20A%20half-hour%20to%20learn%20Rust_files/x86asm.js" defer="defer"></script>
+
+<script src="amos%20-%20A%20half-hour%20to%20learn%20Rust_files/rust.js" defer="defer"></script>
+
+<script src="amos%20-%20A%20half-hour%20to%20learn%20Rust_files/javascript.js" defer="defer"></script>
+
+<script src="amos%20-%20A%20half-hour%20to%20learn%20Rust_files/shell.js" defer="defer"></script>
+
+<script src="amos%20-%20A%20half-hour%20to%20learn%20Rust_files/bash.js" defer="defer"></script>
+
+<script src="amos%20-%20A%20half-hour%20to%20learn%20Rust_files/go.js" defer="defer"></script>
+
+<script src="amos%20-%20A%20half-hour%20to%20learn%20Rust_files/clojure.js" defer="defer"></script>
+
+<script src="amos%20-%20A%20half-hour%20to%20learn%20Rust_files/llvm.js" defer="defer"></script>
+
+<script src="amos%20-%20A%20half-hour%20to%20learn%20Rust_files/typescript.js" defer="defer"></script>
+
+
+
+
+
+
+
+<script src="amos%20-%20A%20half-hour%20to%20learn%20Rust_files/add-to-calendar.js" defer="defer"></script>
+
+
+
+<script>
+  (function (f, a, t, h, o, m) {
+    a[h] = a[h] || function () {
+      (a[h].q = a[h].q || []).push(arguments)
+    };
+    o = f.createElement('script'),
+      m = f.getElementsByTagName('script')[0];
+    o.async = 1; o.src = t; o.id = 'fathom-script';
+    m.parentNode.insertBefore(o, m)
+  })(document, window, '//fathom.fasterthanli.me/tracker.js', 'fathom');
+  fathom('set', 'siteId', 'DPTNC');
+  fathom('trackPageview');
+</script>
+
+
+
+
+
+<script>
+  window.onload = function () {
+    hljs.initHighlighting();
+  };
+</script>
+
+
+
+<script>
+  (function () {
+    let imgs = document.querySelectorAll("div.main .content .markdown img");
+    for (let img of imgs) {
+      let container = {};
+      container.img = img;
+      container.handler = () => {
+        let img = container.img;
+        img.removeEventListener("load", container.handler);
+
+        
+        if (img.width % 2 != 0) {
+          img.classList.add("odd");
+        }
+      };
+      if (img.complete) {
+        container.handler();
+      } else {
+        img.addEventListener("load", container.handler);
+      }
+    }
+  })();
+</script>
+
+<script>
+  (function () {
+    let processExclusive = (item) => {
+      let date = new Date(item.dataset.date);
+      if (new Date() >= date) {
+        
+      } else {
+        
+        item.classList.add("early-access");
+        let badge = item.querySelector(".early-access-badge");
+        if (badge) {
+          let formattedDate = date.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+            second: "numeric",
+            timeZoneName: "short",
+          });
+          badge.title = `This post will unlock for everyone on ${formattedDate}`;
+        }
+      }
+    };
+
+    let exclusives = document.querySelectorAll(".post-item.timed-exclusive");
+    for (let i = 0; i < exclusives.length; i++) {
+      processExclusive(exclusives[i]);
+    }
+  })();
+</script>
+
+<script>
+  (function() {
+    let processDatetime = (datetime) => {
+      let date = new Date(datetime.dataset.date);
+      if (date) {
+        datetime.innerText = date.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+            second: "numeric",
+            timeZoneName: "short",
+        });
+      }
+    };
+
+    let datetimes = document.querySelectorAll(".local-datetime");
+    for (let i = 0; i < datetimes.length; i++) {
+      processDatetime(datetimes[i]);
+    }
+  })();
+</script>
+
+
+
+
+
+</body></html>
